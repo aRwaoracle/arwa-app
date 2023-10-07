@@ -1,23 +1,7 @@
-/*
-* {
-  outline: 1px solid red
-}
-*/
 
 body {
   display: flex;
   flex-direction: column;
-  font-family:
-    Roboto,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Helvetica Neue',
-    'Segoe UI',
-    'Oxygen',
-    'Ubuntu',
-    'Cantarell',
-    'Open Sans',
-    sans-serif;
   color: #323232;
   background-color: #f8f8f8;
 }
