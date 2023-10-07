@@ -9,7 +9,7 @@ export const config = {
 };
 
 const font = fetch(
-  new URL('../../../../public/fonts/sf.ttf', import.meta.url),
+  new URL('../../../../public/fonts/Orbitron.ttf', import.meta.url),
   // eslint-disable-next-line unicorn/prefer-top-level-await
 ).then((response) => response.arrayBuffer());
 
