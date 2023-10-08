@@ -1,5 +1,11 @@
 import React from 'react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function IndexPage(): React.ReactNode {
-  return <div>Arwa</div>;
+  return (
+    <div>
+      {' '}
+      <ConnectButton />
+    </div>
+  );
 }

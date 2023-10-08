@@ -1,7 +1,10 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { AppProps } from 'next/app';
 import { Orbitron } from 'next/font/google';
 import { Meta } from '@components/meta';
+
+import Loading from '@/components/Loading';
+import Web3Provider from '@/providers/Web3Provider';
 
 import '../styles/global.css';
 
@@ -12,7 +15,11 @@ function MyApp({ Component, pageProps }: AppProps): ReactNode {
   return (
     <main className={orbitron.className}>
       <Meta />
-      <Component {...pageProps} />
+      <Suspense fallback={<Loading />}>
+        <Web3Provider>
+          <Component {...pageProps} />
+        </Web3Provider>
+      </Suspense>
     </main>
   );
 }
