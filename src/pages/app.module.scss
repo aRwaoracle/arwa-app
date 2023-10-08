@@ -1,0 +1,9 @@
+.wrapper {
+  margin: auto;
+  max-width: var(--max-width);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
