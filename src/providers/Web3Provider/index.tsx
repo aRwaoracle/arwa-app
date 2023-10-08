@@ -28,6 +28,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
+    goerli,
     mainnet,
     polygon,
     optimism,
