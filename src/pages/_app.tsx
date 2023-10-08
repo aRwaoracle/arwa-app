@@ -3,13 +3,21 @@ import { AppProps } from 'next/app';
 import { Orbitron } from 'next/font/google';
 import { Meta } from '@components/meta';
 
+import ErrorBoundary from '@/components/ErrorBoundary';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import Loading from '@/components/Loading';
 import Web3Provider from '@/providers/Web3Provider';
 
 import '../styles/global.css';
 
+import styles from './app.module.scss';
 // eslint-disable-next-line new-cap
-const orbitron = Orbitron({ weight: '400', subsets: ['latin'] });
+const orbitron = Orbitron({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--orbitron-font',
+});
 
 function MyApp({ Component, pageProps }: AppProps): ReactNode {
   return (
@@ -17,7 +25,13 @@ function MyApp({ Component, pageProps }: AppProps): ReactNode {
       <Meta />
       <Suspense fallback={<Loading />}>
         <Web3Provider>
-          <Component {...pageProps} />
+          <ErrorBoundary>
+            <div className={styles.wrapper}>
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </div>
+          </ErrorBoundary>
         </Web3Provider>
       </Suspense>
     </main>

@@ -2,6 +2,7 @@ import { FC, PropsWithChildren } from 'react';
 import { useRouter } from 'next/router';
 import {
   connectorsForWallets,
+  darkTheme,
   getDefaultWallets,
   Locale,
   RainbowKitProvider,
@@ -74,7 +75,14 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider appInfo={appInfo} chains={chains} locale={locale}>
+      <RainbowKitProvider
+        appInfo={appInfo}
+        chains={chains}
+        locale={locale}
+        theme={darkTheme({
+          accentColor: '#4F6BFF',
+        })}
+      >
         {children}
       </RainbowKitProvider>
     </WagmiConfig>

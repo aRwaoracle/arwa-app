@@ -1,11 +1,11 @@
 import React from 'react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+import Main from '@/components/Main';
 
 export default function IndexPage(): React.ReactNode {
   return (
-    <div>
-      {' '}
-      <ConnectButton />
+    <div style={{ width: '100%', height: '100%' }}>
+      <Main />
     </div>
   );
 }

@@ -20,6 +20,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@dicebear/avatars": "^4.10.8",
+    "@dicebear/collection": "^7.0.1",
+    "@dicebear/core": "^7.0.1",
     "@next/bundle-analyzer": "^13.5.3",
     "@rainbow-me/rainbowkit": "^1.1.1",
     "@sentry/nextjs": "^7.72.0",
