@@ -2,6 +2,6 @@ import { AddressType, BlockchainConstantsType } from '@/data/blockchain/types';
 
 export const BlockchainConstants: BlockchainConstantsType = {
   goerli: {
-    kyc: process.env.GOERLI_KYC_MANAGER_ADDRESS as AddressType,
+    kyc: process.env.NEXT_PUBLIC_GOERLI_KYC_MANAGER_ADDRESS as AddressType,
   },
 };
