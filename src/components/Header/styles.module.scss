@@ -1,0 +1,42 @@
+.header {
+  animation: reveal 1s ease-in-out forwards;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 0.85rem;
+  width: 100%;
+  z-index: 2;
+  max-width: var(--max-width);
+  border-bottom: 1px solid var(--main-background-color);
+  padding-bottom: 1rem;
+}
+
+.avatar_container {
+  display: flex;
+  gap: 12px;
+}
+.profile_content {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.avatar_container {
+  margin-right: 10px; /* Расстояние между аватаром и текстом */
+}
+
+.display_name {
+  flex: 1; /* Занимает всю доступную ширину, чтобы текст был справа */
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
