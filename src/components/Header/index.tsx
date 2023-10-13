@@ -46,7 +46,12 @@ const Header: FC = () => {
               {((): JSX.Element => {
                 if (!connected) {
                   return (
-                    <Button onClick={openConnectModal}>Connect Wallet</Button>
+                    <Button
+                      color="var(--main-color)"
+                      onClick={openConnectModal}
+                    >
+                      Connect Wallet
+                    </Button>
                   );
                 }
 
@@ -59,7 +64,11 @@ const Header: FC = () => {
                 }
 
                 return (
-                  <Button onClick={go('/profile')}>
+                  <Button
+                    variant="outline"
+                    color="var(--main-color)"
+                    onClick={go('/profile')}
+                  >
                     <div className={styles.profile_content}>
                       <div className={styles.avatar_container}>
                         <Avatar profileImage={account.address} />

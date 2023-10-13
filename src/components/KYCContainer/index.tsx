@@ -20,7 +20,11 @@ const KYCContainer = (): JSX.Element => {
           {isKycPassed ? 'Kyc passed' : 'Kyc not passed'}
         </p>
       )}
-      {!isKycPassed && <Button onClick={updateKyc}>Pass KYC</Button>}
+      {!isKycPassed && (
+        <Button color="var(--main-color)" onClick={updateKyc}>
+          Pass KYC
+        </Button>
+      )}
     </div>
   );
 };

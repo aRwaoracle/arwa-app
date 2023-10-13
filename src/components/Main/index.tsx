@@ -11,7 +11,7 @@ const Main: React.FC = () => {
         <p>Text</p>
       </div>
       <div className={styles.buttonContainer}>
-        <Button>Tokenise your property</Button>
+        <Button color="var(--main-color)">Tokenise your property</Button>
       </div>
     </div>
   );

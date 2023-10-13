@@ -15,7 +15,7 @@ const Profile: FC = () => {
   return (
     <div className={styles.main}>
       <div className={styles.content}>
-        <div>{isClient ? <ProfileInfo /> : <p>Server text</p>}</div>
+        <div>{isClient && <ProfileInfo />}</div>
       </div>
       <div>
         <p className={styles.tokenText}>Your tokens</p>

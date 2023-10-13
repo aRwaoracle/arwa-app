@@ -6,8 +6,9 @@
   --max-width: 1100px;
   --main-text-color: #fff;
   --main-background-color: #555555;
-  --main-card-color: #18181B;
+  --main-card-color: #18181b;
   --main-color: #2c80c8;
+  --main-border-radius: 16px;
 }
 
 body {
