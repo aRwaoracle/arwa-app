@@ -13,8 +13,20 @@
 }
 
 .avatar_container {
-  display: flex;
-  gap: 12px;
+  background: radial-gradient(circle at 100% 100%, #ffffff 0, #ffffff 25px, transparent 25px) 0% 0%/30px 30px no-repeat,
+            radial-gradient(circle at 0 100%, #ffffff 0, #ffffff 25px, transparent 25px) 100% 0%/30px 30px no-repeat,
+            radial-gradient(circle at 100% 0, #ffffff 0, #ffffff 25px, transparent 25px) 0% 100%/30px 30px no-repeat,
+            radial-gradient(circle at 0 0, #ffffff 0, #ffffff 25px, transparent 25px) 100% 100%/30px 30px no-repeat,
+            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 10px) calc(100% - 60px) no-repeat,
+            linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 60px) calc(100% - 10px) no-repeat,
+            linear-gradient(320deg, transparent 0%, #652ece 100%),
+            linear-gradient(90deg, transparent 0%, var(--main-color) 100%);
+  border-radius: 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  grid-area: 1 / 1 / 3 / 2;
+  margin-inline: 20px;
+  align-self: center;
 }
 .profile_content {
   display: flex;
@@ -23,11 +35,12 @@
 }
 
 .avatar_container {
-  margin-right: 10px; /* Расстояние между аватаром и текстом */
+  margin-right: 10px;
 }
 
 .display_name {
-  flex: 1; /* Занимает всю доступную ширину, чтобы текст был справа */
+  flex: 1;
+  color: var(--main-text-color)
 }
 
 @keyframes reveal {
