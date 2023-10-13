@@ -1,0 +1,28 @@
+import { memo } from 'react';
+import { useAccount, useBalance } from 'wagmi';
+
+import styles from './styles.module.scss';
+
+const Balance = (): JSX.Element => {
+  const { address } = useAccount();
+
+  const {
+    data,
+    isError,
+    isLoading: balanceLoading,
+  } = useBalance({
+    address: address,
+  });
+
+  if (balanceLoading) return <div>Fetching balance…</div>;
+  if (isError) return <div>Error fetching balance</div>;
+  return (
+    <div className={styles.main}>
+      <p>
+        Balance: {data?.formatted} {data?.symbol}
+      </p>
+    </div>
+  );
+};
+
+export default memo(Balance);

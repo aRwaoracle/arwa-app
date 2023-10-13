@@ -1,7 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --max-width: 1100px;
   --main-text-color: #fff;
   --main-background-color: #555555;
+  --main-card-color: #18181B;
   --main-color: #2c80c8;
 }
 

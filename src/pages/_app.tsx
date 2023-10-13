@@ -2,6 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import { AppProps } from 'next/app';
 import { Orbitron } from 'next/font/google';
 import { Meta } from '@components/meta';
+import { NextUIProvider } from '@nextui-org/system';
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Footer from '@/components/Footer';
@@ -25,13 +26,15 @@ function MyApp({ Component, pageProps }: AppProps): ReactNode {
       <Meta />
       <Suspense fallback={<Loading />}>
         <Web3Provider>
-          <ErrorBoundary>
-            <div className={styles.wrapper}>
-              <Header />
-              <Component {...pageProps} />
-              <Footer />
-            </div>
-          </ErrorBoundary>
+          <NextUIProvider>
+            <ErrorBoundary>
+              <div className={styles.wrapper}>
+                <Header />
+                <Component {...pageProps} />
+                <Footer />
+              </div>
+            </ErrorBoundary>
+          </NextUIProvider>
         </Web3Provider>
       </Suspense>
     </main>

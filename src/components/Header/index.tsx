@@ -20,7 +20,6 @@ const Header: FC = () => {
         {({
           account,
           chain,
-
           openChainModal,
           openConnectModal,
           authenticationStatus,
@@ -63,7 +62,7 @@ const Header: FC = () => {
                   <Button onClick={go('/profile')}>
                     <div className={styles.profile_content}>
                       <div className={styles.avatar_container}>
-                        <Avatar profileImage={account.displayName} />
+                        <Avatar profileImage={account.address} />
                       </div>
                       <span className={styles.display_name}>
                         {account.displayName}
