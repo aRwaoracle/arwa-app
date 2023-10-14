@@ -22,7 +22,7 @@ const orbitron = Orbitron({
 
 function MyApp({ Component, pageProps }: AppProps): ReactNode {
   return (
-    <main className={orbitron.className}>
+    <main className={`${orbitron.className}`}>
       <Meta />
       <Suspense fallback={<Loading />}>
         <Web3Provider>

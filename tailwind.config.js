@@ -5,12 +5,15 @@ export default {
   content: [
     // Or if using `src` directory:
     './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@nextui-org/theme/dist/components/(button|card|image).js'
+    './node_modules/@nextui-org/theme/dist/components/(button|card|image|modal|input).js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        orbitron: ['Orbitron', 'sans-serif'],
+      },
+    },
   },
   darkMode: 'class',
-
   plugins: [nextui()],
 };
