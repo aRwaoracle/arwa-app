@@ -1,0 +1,20 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: var(--main-background-color);
+  border-radius: var(--main-border-radius);
+  width: 100%;
+}
+
+.tokenText {
+  color: var(--main-text-color);
+  font-size: 30px;
+  margin-bottom: 20px;
+}
