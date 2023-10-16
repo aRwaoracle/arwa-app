@@ -49,12 +49,10 @@ const PropertyCards = (): JSX.Element => {
                   <p className="text-white">0.00003 ETH</p>
                 </div>
                 <div className="gap-2 flex flex-col mt-8 items-center w-full">
-                  <Button className="bg-rose-600 opacity-60 h-11">
+                  <Button color="danger" variant="light">
                     Sell property
                   </Button>
-                  <Button className="bg-cyan-500 opacity-80 h-11">
-                    Buy more
-                  </Button>
+                  <Button color="primary">Buy more</Button>
                 </div>
               </CardFooter>
             </Card>

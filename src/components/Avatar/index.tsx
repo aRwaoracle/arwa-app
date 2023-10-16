@@ -26,7 +26,7 @@ const Avatar: FC<AvatarProperties> = ({
 
   return (
     <Image
-      src={avatar}
+      src={seed.includes('/') ? seed : avatar}
       alt="Avatar"
       width={size || standartSize}
       height={size || standartSize}
