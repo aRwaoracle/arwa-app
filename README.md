@@ -12,3 +12,7 @@
 - `npm run build`
 - `npm start`
 
+# Contracts
+
+Arwa property - [0xca92bd8bb6798fbcbb385c124eebb0a5405498d2](https://goerli.etherscan.io/address/0xca92bd8bb6798fbcbb385c124eebb0a5405498d2)
+

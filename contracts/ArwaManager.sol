@@ -1,15 +1,20 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "./KycStore.sol";
+import "./CloneFactory.sol";
+import "./ArwaProperty.sol";
 
-contract ArwaManager {
+contract ArwaManager is CloneFactory {
 
+  address propertyItemAddress;
   address private kycManager;
   address owner;
 
-  constructor(address _kycManager) {
+  constructor(address _kycManager,  address _propertyItemAddress) {
     kycManager = _kycManager;
     owner = msg.sender;
+    propertyItemAddress = _propertyItemAddress;
   }
 
   modifier onlyKyced {
@@ -39,6 +44,7 @@ contract ArwaManager {
     uint256 id;
     string name;
     string docs;
+    string symbol;
     address owner;
     Status status;
     address collectionAddress;
@@ -88,17 +94,29 @@ contract ArwaManager {
     return properties[propertyId];
   }
 
-  function createPropertyRequest(string calldata name, string calldata docs) external onlyKyced {
+  function createPropertyRequest(string calldata name, string calldata docs, string calldata symbol) external onlyKyced {
     properties.push(Property({
     id: properties.length,
     name: name,
     docs: docs,
+    symbol: symbol,
     owner: msg.sender,
-    status: Status.Shipped,
+    status: Status.Pending,
     collectionAddress: address(0),
     verifier: address(0)
     }));
   }
 
+  function setLibraryAddress(address _propertyItemAddress) public onlyOwner {
+    propertyItemAddress = _propertyItemAddress;
+  }
+
+  function createPropertyCollection(uint256 propertyId, uint256 priceInWei) public onlyOwner {
+    Property storage userProperty = properties[propertyId];
+    ArwaProperty prop = new ArwaProperty(userProperty.name, userProperty.symbol, userProperty.owner, userProperty.docs, priceInWei);
+    address propertyAddress = address(prop);
+    userProperty.collectionAddress = propertyAddress;
+    userProperty.status = Status.Accepted;
+  }
 
 }
