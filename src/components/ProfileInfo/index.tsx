@@ -14,7 +14,6 @@ import styles from './styles.module.scss';
 const ProfileInfo = (): JSX.Element => {
   const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <div className={styles.mainContainer}>
       <Avatar
