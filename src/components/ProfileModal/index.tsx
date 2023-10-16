@@ -1,5 +1,6 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import Image from 'next/image';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/button';
 import {
@@ -9,15 +10,15 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/modal';
+import { Progress } from '@nextui-org/progress';
 import { motion } from 'framer-motion';
-import { useAccount } from 'wagmi';
 import * as Yup from 'yup';
-
-import Avatar from '@/components/Avatar';
 
 import CustomInput from '../CustomInput';
 
 import styles from './styles.module.scss';
+
+import documentIcon from '/public/assets/doc.svg';
 
 type TProfileModal = {
   isOpen: boolean;
@@ -45,13 +46,15 @@ const ProfileModal: React.FC<TProfileModal> = ({
   const {
     control,
     formState: { errors },
+    getValues,
+    watch,
   } = useForm<FormState>({
     resolver: yupResolver(schemaUser),
     mode: 'onChange',
   });
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
-  const { address } = useAccount();
-  const [image, setImage] = useState<string>(address || '');
+  const [image, setImage] = useState<string>('');
+  const [progress, setProgress] = useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const changePhoto = (event): void => {
@@ -70,6 +73,28 @@ const ProfileModal: React.FC<TProfileModal> = ({
     }
   };
 
+  useEffect(() => {
+    if (watch('name') === '') {
+      setProgress((previous) => previous - 33);
+    } else {
+      setProgress((previous) => previous + 33);
+    }
+  }, [watch('name')]);
+  useEffect(() => {
+    if (watch('surname') === '') {
+      setProgress((previous) => previous - 33);
+    } else {
+      setProgress((previous) => previous + 33);
+    }
+  }, [watch('surname')]);
+  useEffect(() => {
+    if (image === '') {
+      setProgress((previous) => previous - 33);
+    } else {
+      setProgress((previous) => previous + 33);
+    }
+  }, [watch('name')]);
+
   return (
     <Modal
       backdrop="blur"
@@ -79,17 +104,25 @@ const ProfileModal: React.FC<TProfileModal> = ({
       className={styles.container}
     >
       <ModalContent className="gap-3">
-        <ModalHeader className="flex flex-col items-center gap-3">
-          <p className={`${styles.header} font-orbitron`}>Profile Info</p>
+        <ModalHeader className="flex flex-col items-center gap-5">
+          <p className={`${styles.header} font-orbitron`}>Pass KYC</p>
+          <Progress
+            aria-label="Loading..."
+            value={60}
+            className="max-w-md"
+            classNames={{ base: 'bg-white/70 rounded-md	' }}
+          />
           <motion.div
             whileHover={{ scale: 1.05, opacity: 0.7 }}
             onClick={handleClick}
             className="cursor-pointer"
           >
-            <Avatar
-              profileImage={image || ''}
+            <Image
+              src={documentIcon}
+              alt="Avatar"
+              width={150}
+              height={150}
               className={styles.avatarContainer}
-              size={150}
             />
             <input
               onChange={changePhoto}
@@ -135,7 +168,13 @@ const ProfileModal: React.FC<TProfileModal> = ({
           <Button color="danger" variant="light" onPress={onClose}>
             Close
           </Button>
-          <Button color="primary" onPress={onClose}>
+          <Button
+            color="primary"
+            onPress={() => {
+              onClose();
+              console.log(getValues('name'));
+            }}
+          >
             Save
           </Button>
         </ModalFooter>

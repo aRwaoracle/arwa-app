@@ -25,7 +25,7 @@ const ProfileInfo = (): JSX.Element => {
         <div className="flex flex-row justify-between">
           <Balance />
           <Button color="var(--main-color)" onClick={onOpen}>
-            <p>Update profile info</p>
+            <p>Pass KYC</p>
           </Button>
         </div>
         <KYCContainer />
