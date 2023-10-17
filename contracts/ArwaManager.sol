@@ -2,13 +2,12 @@
 pragma solidity ^0.8.0;
 
 import "./KycStore.sol";
-import "./CloneFactory.sol";
 import "./ArwaProperty.sol";
 
-contract ArwaManager is CloneFactory {
+contract ArwaManager {
 
   address propertyItemAddress;
-  address private kycManager;
+  address public kycManager;
   address owner;
 
   constructor(address _kycManager,  address _propertyItemAddress) {
@@ -111,11 +110,16 @@ contract ArwaManager is CloneFactory {
     propertyItemAddress = _propertyItemAddress;
   }
 
-  function createPropertyCollection(uint256 propertyId, uint256 priceInWei) public onlyOwner {
+  function createPropertyCollection(uint256 propertyId, uint256 priceInWei) public {
     Property storage userProperty = properties[propertyId];
+
+    bool isAbleToUpdate = userProperty.verifier == msg.sender || (userProperty.verifier == address(0) && verifier[msg.sender]);
+    require(isAbleToUpdate, "Cannot create property collection!");
+
     ArwaProperty prop = new ArwaProperty(userProperty.name, userProperty.symbol, userProperty.owner, userProperty.docs, priceInWei);
     address propertyAddress = address(prop);
     userProperty.collectionAddress = propertyAddress;
+    userProperty.verifier = msg.sender;
     userProperty.status = Status.Accepted;
   }
 
