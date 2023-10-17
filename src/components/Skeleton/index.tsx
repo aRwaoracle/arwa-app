@@ -9,11 +9,7 @@ type TSkeleton = {
 
 const Skeleton: React.FC<TSkeleton> = ({ children, isLoaded, className }) => {
   return (
-    <SkeletonNext
-      isLoaded={isLoaded}
-      className={`${className}`}
-      classNames={{ base: 'bg-black', content: 'bg-transparent' }}
-    >
+    <SkeletonNext isLoaded={isLoaded} className={`${className} dark`}>
       {children}
     </SkeletonNext>
   );

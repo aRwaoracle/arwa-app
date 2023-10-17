@@ -51,12 +51,12 @@ const PropertyCards = (): JSX.Element => {
               <CardFooter className="flex-col items-start gap-1">
                 <p className="text-default-500 text-xl">Karra Loft 3A</p>
                 <p className="text-default-500 text-sm">Indonesia, Bali</p>
-                <Skeleton isLoaded={load}>
-                  <div className="flex flex-row text-small justify-between w-full mt-3">
+                <div className="flex flex-row text-small justify-between w-full mt-3">
+                  <Skeleton isLoaded={load} className="rounded-lg">
                     <p className="text-white">Tokens</p>
-                    <p className="text-white">3/4000</p>
-                  </div>
-                </Skeleton>
+                  </Skeleton>
+                  <p className="text-white">3/4000</p>
+                </div>
                 <div className="flex flex-row text-small justify-between w-full">
                   <p className="text-white">Current value</p>
                   <p className="text-white">0.015 ETH</p>
