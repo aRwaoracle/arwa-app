@@ -50,6 +50,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
     formState: { errors },
     getValues,
     watch,
+    reset,
   } = useForm<FormState>({
     resolver: yupResolver(schemaUser),
     mode: 'onChange',
@@ -73,6 +74,22 @@ const ProfileModal: React.FC<TProfileModal> = ({
     if (hiddenFileInput.current) {
       hiddenFileInput.current.click();
     }
+  };
+
+  const discardClose = (): void => {
+    reset(
+      { name: '', surname: '' },
+      {
+        keepErrors: false,
+        keepDirty: false,
+        keepIsSubmitted: false,
+        keepTouched: false,
+        keepIsValid: false,
+        keepSubmitCount: false,
+        keepValues: false,
+      },
+    );
+    onClose();
   };
 
   useEffect(() => {
@@ -161,10 +178,10 @@ const ProfileModal: React.FC<TProfileModal> = ({
           />
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" variant="light" onPress={onClose}>
+          <Button color="danger" variant="light" onPress={discardClose}>
             Close
           </Button>
-          <Button color="primary" onPress={onClose}>
+          <Button color="primary" onPress={discardClose}>
             Save
           </Button>
         </ModalFooter>
