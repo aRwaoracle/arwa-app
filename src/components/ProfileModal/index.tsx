@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable no-magic-numbers */
 import React, { memo, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Image from 'next/image';
@@ -74,26 +76,20 @@ const ProfileModal: React.FC<TProfileModal> = ({
   };
 
   useEffect(() => {
-    if (watch('name') === '') {
-      setProgress((previous) => previous - 33);
-    } else {
-      setProgress((previous) => previous + 33);
-    }
+    if (getValues('name') !== undefined)
+      setProgress((previous) =>
+        getValues('name') === '' ? previous - 33 : previous + 33,
+      );
   }, [watch('name')]);
   useEffect(() => {
-    if (watch('surname') === '') {
-      setProgress((previous) => previous - 33);
-    } else {
-      setProgress((previous) => previous + 33);
-    }
+    if (getValues('surname') !== undefined)
+      setProgress((previous) =>
+        getValues('surname') === '' ? previous - 33 : previous + 33,
+      );
   }, [watch('surname')]);
   useEffect(() => {
-    if (image === '') {
-      setProgress((previous) => previous - 33);
-    } else {
-      setProgress((previous) => previous + 33);
-    }
-  }, [watch('name')]);
+    if (image !== '') setProgress((previous) => previous + 33);
+  }, [image]);
 
   return (
     <Modal
@@ -108,7 +104,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
           <p className={`${styles.header} font-orbitron`}>Pass KYC</p>
           <Progress
             aria-label="Loading..."
-            value={60}
+            value={progress}
             className="max-w-md"
             classNames={{ base: 'bg-white/70 rounded-md	' }}
           />
@@ -168,13 +164,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
           <Button color="danger" variant="light" onPress={onClose}>
             Close
           </Button>
-          <Button
-            color="primary"
-            onPress={() => {
-              onClose();
-              console.log(getValues('name'));
-            }}
-          >
+          <Button color="primary" onPress={onClose}>
             Save
           </Button>
         </ModalFooter>
