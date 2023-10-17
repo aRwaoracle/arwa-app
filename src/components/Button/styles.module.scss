@@ -3,7 +3,7 @@
   display: grid;
   place-content: center;
   padding: 12px 14px;
-  border-radius: 50px;
+  border-radius: var(--main-border-radius);
   border: 0;
   font-weight: 700;
   font-size: 18px;

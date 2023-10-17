@@ -1,81 +1,26 @@
 import { FC } from 'react';
-import { useRouter } from 'next/router';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Image from 'next/image';
+import Link from 'next/link';
 
-import Avatar from '../Avatar';
-import { Button } from '../Button';
+import Arwa from '../../../public/assets/aRwa_logo.png';
+import ConnectionButton from '../ConnectionButton';
 
 import styles from './styles.module.scss';
 
 const Header: FC = () => {
-  const { push } = useRouter();
-
-  const go = (url: string) => {
-    return async () => await push(url);
-  };
-
   return (
     <div className={styles.header}>
-      <ConnectButton.Custom>
-        {({
-          account,
-          chain,
+      <Link href={'/'} className={styles.link}>
+        <Image className={styles.header_image} src={Arwa} alt={'Arwa'} />
+        aRwaoracle
+      </Link>
+      <Link className={styles.market} href={'market'}>
+        Market
+      </Link>
 
-          openChainModal,
-          openConnectModal,
-          authenticationStatus,
-          mounted,
-        }): JSX.Element => {
-          const ready = mounted && authenticationStatus !== 'loading';
-          const connected =
-            ready &&
-            account &&
-            chain &&
-            (!authenticationStatus || authenticationStatus === 'authenticated');
-
-          return (
-            <div
-              {...(!ready && {
-                'aria-hidden': true,
-                style: {
-                  opacity: 0,
-                  pointerEvents: 'none',
-                  userSelect: 'none',
-                },
-              })}
-            >
-              {((): JSX.Element => {
-                if (!connected) {
-                  return (
-                    <Button onClick={openConnectModal}>Connect Wallet</Button>
-                  );
-                }
-
-                if (chain.unsupported) {
-                  return (
-                    <button onClick={openChainModal} type="button">
-                      Wrong network
-                    </button>
-                  );
-                }
-
-                return (
-                  <Button onClick={go('/profile')}>
-                    <div className={styles.profile_content}>
-                      <div className={styles.avatar_container}>
-                        <Avatar profileImage={account.displayName} />
-                      </div>
-                      <span className={styles.display_name}>
-                        {account.displayName}
-                      </span>
-                    </div>
-                  </Button>
-                );
-              })()}
-            </div>
-          );
-        }}
-      </ConnectButton.Custom>
+      <div>
+        <ConnectionButton />
+      </div>
     </div>
   );
 };
