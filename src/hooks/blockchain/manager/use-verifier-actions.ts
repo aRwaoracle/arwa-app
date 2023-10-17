@@ -18,7 +18,7 @@ export const useVerifierActions = () => {
         abi: ArwaManagerAbi,
         functionName: 'createPropertyCollection',
         account: account.address,
-        args: [id, Number((price * 10 ** 18).toFixed(0))],
+        args: [id, Number(price.toFixed(0))],
       });
       return { hash };
     },

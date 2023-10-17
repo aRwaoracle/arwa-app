@@ -14,3 +14,13 @@ export enum PropertyStatus {
   Rejected,
   Canceled,
 }
+
+export const StatusToText: Record<PropertyStatus, string> = {
+  [PropertyStatus.Pending]: 'Pending for approve',
+  [PropertyStatus.Shipped]: 'Shipped',
+  [PropertyStatus.Accepted]: 'Accepted accepted!',
+  [PropertyStatus.Rejected]: 'Rejected property',
+  [PropertyStatus.Canceled]: 'Canceled property',
+};
+
+export const AddressZero = '0x0000000000000000000000000000000000000000';
