@@ -14,29 +14,17 @@ import {
 } from '@rainbow-me/rainbowkit/wallets';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
-  arbitrum,
-  base,
   goerli,
-  mainnet,
-  optimism,
-  polygon,
-  zora,
+  mantleTestnet,
+  polygonZkEvmTestnet,
+  scrollSepolia,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 import '@rainbow-me/rainbowkit/styles.css';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [
-    goerli,
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    zora,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
-  ],
+  [goerli, mantleTestnet, polygonZkEvmTestnet, scrollSepolia],
   [publicProvider()],
 );
 
@@ -64,6 +52,8 @@ const connectors = connectorsForWallets([
   },
 ]);
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
