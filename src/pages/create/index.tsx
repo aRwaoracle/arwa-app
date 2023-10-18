@@ -1,0 +1,246 @@
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@nextui-org/button';
+import { Card } from '@nextui-org/card';
+import { Input } from '@nextui-org/input';
+import { Skeleton } from '@nextui-org/skeleton';
+import { motion } from 'framer-motion';
+
+import { useProperty } from '@/hooks/blockchain/manager/use-property';
+import { useKycManager } from '@/hooks/blockchain/use-kyc-manager';
+
+import styles from './styles.module.scss';
+
+import documentIcon from '/public/assets/doc.svg';
+
+const Create: React.FC = () => {
+  const { createProperty } = useProperty();
+  const { isKycPassed, isLoading, updateKyc } = useKycManager();
+  const [isClient, setIsClient] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [image, setImage] = useState<string>('');
+  const [collectionName, setCollectionName] = useState('');
+  const [documentReference, setDocumentReference] = useState('');
+  const [collectionSymbol, setCollectionSymbol] = useState('');
+
+  const hiddenFileInput = React.useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const { name, value } = event.target;
+    switch (name) {
+      case 'userName': {
+        setUserName(value);
+        break;
+      }
+      case 'surname': {
+        setSurname(value);
+        break;
+      }
+      case 'collectionName': {
+        setCollectionName(value);
+        break;
+      }
+      case 'documentReference': {
+        setDocumentReference(value);
+        break;
+      }
+      case 'collectionSymbol': {
+        setCollectionSymbol(value);
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  };
+
+  const handleCreateProperty = async (): Promise<void> => {
+    const hash = await createProperty(
+      collectionName,
+      documentReference,
+      collectionSymbol,
+    );
+    console.log({ hash });
+  };
+
+  const validateText = (value: string): boolean => {
+    const textPattern = /^[A-Za-z-]+$/;
+    return textPattern.test(value);
+  };
+
+  const validateURL = (value: string): boolean => {
+    const urlPattern = /^(https?|ftp):\/\/[^\s#$./?].\S*$/i;
+    return urlPattern.test(value);
+  };
+
+  const isInvalid = (
+    value: string,
+    pattern: (value: string) => boolean,
+  ): boolean => {
+    if (value === '') return false;
+    return !pattern(value);
+  };
+
+  const isInvalidCollectionName = isInvalid(collectionName, validateText);
+  const isInvalidCollectionSymbol = isInvalid(collectionSymbol, validateText);
+  const isInvalidName = isInvalid(userName, validateText);
+  const isInvalidSurname = isInvalid(surname, validateText);
+  const isInvalidUrl = isInvalid(documentReference, validateURL);
+
+  const handleClick = (): void => {
+    if (hiddenFileInput.current) {
+      hiddenFileInput.current.click();
+    }
+  };
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const changePhoto = (event): void => {
+    event.preventDefault();
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onloadend = (): void => {
+      setImage(reader.result ? reader.result.toString() : '');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const disableCreateButton =
+    !isKycPassed ||
+    !collectionName ||
+    !documentReference ||
+    !collectionSymbol ||
+    isInvalidCollectionSymbol ||
+    isInvalidCollectionName ||
+    isInvalidUrl;
+
+  const disableKYCButton = !userName || !surname || !image;
+  const errorMessage = 'Please enter valid text (only letters)';
+
+  return (
+    <div>
+      {isClient && (
+        <div>
+          <div className={styles.kycContainer}>
+            <Card
+              className={`mb-4 ${
+                isKycPassed ? 'bg-green-500 w-96 h-40' : 'bg-red-500'
+              }`}
+            >
+              <Skeleton
+                isLoaded={!isLoading}
+                className={`rounded-lg ${isKycPassed ? 'w-96 h-44' : ''}`}
+              >
+                <div className={`p-4 rounded-md font-orbitron`}>
+                  {isKycPassed ? (
+                    <p>KYC passed!</p>
+                  ) : (
+                    <>
+                      <p>KYC not passed. Enter the data to pass KYC.</p>
+                      <motion.div
+                        whileHover={{ opacity: 0.7 }}
+                        onClick={handleClick}
+                        className={styles.motion}
+                      >
+                        <div>
+                          <Image
+                            src={documentIcon}
+                            alt="Avatar"
+                            width={150}
+                            height={150}
+                            className={styles.avatarContainer}
+                          />
+                          <input
+                            onChange={changePhoto}
+                            type="file"
+                            style={{ display: 'none' }}
+                            ref={hiddenFileInput}
+                          />
+                        </div>
+                      </motion.div>
+                      <Input
+                        name="userName"
+                        label="Name"
+                        value={userName}
+                        onChange={handleInputChange}
+                        isInvalid={isInvalidName}
+                        errorMessage={isInvalidName && errorMessage}
+                        className="my-4"
+                      />
+                      <Input
+                        name="surname"
+                        label="Surname"
+                        value={surname}
+                        onChange={handleInputChange}
+                        isInvalid={isInvalidSurname}
+                        errorMessage={isInvalidSurname && errorMessage}
+                        className="my-4"
+                      />
+                      <Button
+                        onClick={updateKyc}
+                        className={`${
+                          disableKYCButton ? 'bg-red-700' : 'bg-green-500'
+                        } mt-4`}
+                        disabled={disableKYCButton}
+                      >
+                        Pass KYC
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </Skeleton>
+            </Card>
+            <Input
+              name="collectionName"
+              label="Collection name"
+              value={collectionName}
+              onChange={handleInputChange}
+              className="my-4"
+              isInvalid={isInvalidCollectionName}
+              errorMessage={isInvalidCollectionName && errorMessage}
+              isDisabled={!isKycPassed}
+            />
+            <Input
+              name="documentReference"
+              label="Document reference"
+              value={documentReference}
+              onChange={handleInputChange}
+              className="my-4"
+              isInvalid={isInvalidUrl}
+              errorMessage={isInvalidUrl && 'Please enter a valid URL'}
+              isDisabled={!isKycPassed}
+            />
+            <Input
+              name="collectionSymbol"
+              label="Collection symbol"
+              value={collectionSymbol}
+              onChange={handleInputChange}
+              className="my-4"
+              isInvalid={isInvalidCollectionSymbol}
+              errorMessage={isInvalidCollectionSymbol && errorMessage}
+              isDisabled={!isKycPassed}
+            />
+
+            <Button
+              onClick={handleCreateProperty}
+              className={`${
+                disableCreateButton ? 'bg-red-500' : 'bg-green-500'
+              } mt-4`}
+              isDisabled={disableCreateButton}
+            >
+              Create request
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Create;
