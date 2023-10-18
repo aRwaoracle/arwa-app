@@ -2,8 +2,8 @@ import { AddressType, BlockchainConstantsType } from '@/data/blockchain/types';
 
 export const BlockchainConstants: BlockchainConstantsType = {
   goerli: {
-    kyc: process.env.NEXT_PUBLIC_GOERLI_KYC_MANAGER_ADDRESS as AddressType,
-    arwaManager: process.env.NEXT_PUBLIC_ARWA_MANAGER_ADDRESS as AddressType,
+    kyc: '0x3da1841dd7876f338dd8ef0fe75d9cc6fcc951cb' as AddressType,
+    arwaManager: '0x9e9c2aC8Abcd77aFB89299a69f4e6aFF9F851296' as AddressType,
   },
 };
 

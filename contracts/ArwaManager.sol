@@ -29,7 +29,7 @@ contract ArwaManager {
 
   mapping(address => bool) public verifier;
 
-  Property[] private properties;
+  Property[] public properties;
 
   enum Status {
     Pending,
@@ -121,6 +121,31 @@ contract ArwaManager {
     userProperty.collectionAddress = propertyAddress;
     userProperty.verifier = msg.sender;
     userProperty.status = Status.Accepted;
+  }
+
+  function getAvailableVerifierProperties() external view returns(Property[] memory) {
+    require(verifier[msg.sender], "You not a verifier");
+
+    uint256 resultCount;
+
+    for (uint i = 0; i < properties.length; i++) {
+      if (properties[i].verifier == msg.sender || properties[i].verifier == address(0)) {
+        resultCount++;
+      }
+    }
+
+    if (resultCount == 0) return new Property[](0);
+
+    Property[] memory _properties = new Property[](resultCount);
+    uint256 j;
+
+    for(uint i = 0; i < properties.length; i++){
+      if(properties[i].verifier == msg.sender || properties[i].verifier == address(0)){
+        _properties[j] = properties[i];
+        j++;
+      }
+    }
+    return _properties;
   }
 
 }

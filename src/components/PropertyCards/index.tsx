@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
@@ -17,7 +17,7 @@ import styles from './styles.module.scss';
 const PropertyCards = (): JSX.Element => {
   const [isClient, setIsClient] = useState(false);
   const [load, setload] = useState(false);
-  const { userProperties } = useArwaUser();
+  const { userProperties, verifierProperties, isVerifier } = useArwaUser();
   const { mintTokens, getPropertyCollectionInfo } = useProperty();
   const { acceptProperty: _acceptProperty } = useVerifierActions();
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -49,12 +49,16 @@ const PropertyCards = (): JSX.Element => {
     console.log({ result });
   };
 
+  const properties = useMemo(() => {
+    return isVerifier ? verifierProperties : userProperties;
+  }, [userProperties, verifierProperties, isVerifier]);
+
   return (
     <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
       {isClient && (
         <>
           <>
-            {userProperties?.map((property, index) => (
+            {properties?.map((property, index) => (
               <Card
                 shadow="sm"
                 key={index}
@@ -135,7 +139,7 @@ const PropertyCards = (): JSX.Element => {
             ))}
           </>
           <>
-            {userProperties?.length === 0 && (
+            {properties?.length === 0 && (
               <p>
                 No tokens yet! Click button above to create your first property!
               </p>

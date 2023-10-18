@@ -27,10 +27,21 @@ export const useArwaUser = () => {
     args: [address],
   });
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-ignore
+  const { data: verifierProperties } = useContractRead({
+    abi: ArwaManagerAbi,
+    address: BlockchainConstants.goerli.arwaManager,
+    functionName: 'getAvailableVerifierProperties',
+    // args: ['0x0dA55Bb04EAbF26a00B0B90D27c591E822323ab2'],
+    account: address,
+  });
+
   return useMemo(
     () => ({
       isVerifier,
       userProperties: userProperties as PropertyType[],
+      verifierProperties: verifierProperties as PropertyType[],
     }),
     [userProperties, isVerifier],
   );
