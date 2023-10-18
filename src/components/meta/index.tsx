@@ -13,8 +13,8 @@ type PropertiesType = {
 const defaults: PropertiesType = {
   title: `${appInfo.name} ${appInfo.version}`,
   description: appInfo.name,
-  image: `http://localhost:3000/api/logo?titleFirst=${appInfo.name}&titleSecond=${appInfo.version}`,
-  url: 'http://localhost:3000',
+  image: `${process.env.NEXT_PUBLIC_SELF_URL_BASE}/assets/cover.png`,
+  url: `${process.env.NEXT_PUBLIC_SELF_URL_BASE}`,
 };
 
 export const Meta = (properties: PropertiesType): ReactElement => {

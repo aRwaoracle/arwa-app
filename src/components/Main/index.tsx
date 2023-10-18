@@ -44,13 +44,12 @@ const Main: React.FC = () => {
 
   return (
     <div className={styles.main}>
-      <div className={styles.content}>
-        <Image className={styles.main_image} src={Arwa} alt={'Arwa'} />
-      </div>
+      <Image className={styles.main_image} src={Arwa} alt={'Arwa'} />
       <div className={styles.buttonContainer}>
         {/* <Button color="var(--main-color)" onClick={onClick}>
           Tokenise your property
         </Button> */}
+        <span>Start your journey now!</span>
         <Button color="white" onClick={go('/create')}>
           Tokenise your property
         </Button>

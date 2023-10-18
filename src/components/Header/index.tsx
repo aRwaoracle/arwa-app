@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Arwa from '../../../public/assets/aRwa_logo.png';
+import Arwa from '../../../public/assets/logo.svg';
 import ConnectionButton from '../ConnectionButton';
 
 import styles from './styles.module.scss';
