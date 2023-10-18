@@ -53,82 +53,94 @@ const PropertyCards = (): JSX.Element => {
     <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
       {isClient && (
         <>
-          {userProperties.map((property, index) => (
-            <Card
-              shadow="sm"
-              key={index}
-              onPress={(): void => console.log('item pressed')}
-              className={styles.cardContainer}
-            >
-              <CardBody className="overflow-visible p-0 shadow-lg">
-                <Skeleton isLoaded={load}>
-                  <Image
-                    removeWrapper
-                    radius="none"
-                    alt={'home'}
-                    className="z-0 w-full h-full object-cover"
-                    src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                    onLoad={handleLoad}
-                    width={100}
-                    height={65}
-                  />
-                </Skeleton>
-              </CardBody>
-              <CardFooter className="flex-col items-start gap-1">
-                <p className="text-default-500 text-xl">{property.name}</p>
+          <>
+            {userProperties?.map((property, index) => (
+              <Card
+                shadow="sm"
+                key={index}
+                onPress={(): void => console.log('item pressed')}
+                className={styles.cardContainer}
+              >
+                <CardBody className="overflow-visible p-0 shadow-lg">
+                  <Skeleton isLoaded={load}>
+                    <Image
+                      removeWrapper
+                      radius="none"
+                      alt={'home'}
+                      className="z-0 w-full h-full object-cover"
+                      src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                      onLoad={handleLoad}
+                      width={100}
+                      height={65}
+                    />
+                  </Skeleton>
+                </CardBody>
+                <CardFooter className="flex-col items-start gap-1">
+                  <p className="text-default-500 text-xl">{property.name}</p>
 
-                {property.collectionAddress !== AddressZero && (
-                  <div className="flex flex-row text-small justify-between w-full mt-3">
-                    <p className="text-white">Collection address:</p>
-                    <Link
-                      className="text-white text-ellipsis"
-                      href={`https://goerli.etherscan.io/address/${property.collectionAddress}`}
-                      target="_blank"
-                    >
-                      {startAndEnd(property.collectionAddress, 6)}
-                    </Link>
-                  </div>
-                )}
-
-                <div className="flex flex-row text-small justify-between w-full mt-3">
-                  <p className="text-white">Status:</p>
-                  <p className="text-white"> {StatusToText[property.status]}</p>
-                </div>
-
-                <div className="flex flex-row text-small justify-between w-full mt-3">
-                  <p className="text-white">Symbol:</p>
-                  <p className="text-white"> {property.symbol}</p>
-                </div>
-                <Button onClick={() => acceptProperty(property.id)}>
-                  Accept property by verifier only!
-                </Button>
-                <div className="gap-2 flex flex-col mt-8 items-center w-full">
-                  <Button color="danger" variant="light">
-                    Sell property
-                  </Button>
-                  <Button color="primary">Buy more</Button>
-                  {property.collectionAddress && (
-                    <>
-                      <Button
-                        color="primary"
-                        onClick={() => mint(property.collectionAddress)}
+                  {property.collectionAddress !== AddressZero && (
+                    <div className="flex flex-row text-small justify-between w-full mt-3">
+                      <p className="text-white">Collection address:</p>
+                      <Link
+                        className="text-white text-ellipsis"
+                        href={`https://goerli.etherscan.io/address/${property.collectionAddress}`}
+                        target="_blank"
                       >
-                        Mint
-                      </Button>
-                      <Button
-                        color="primary"
-                        onClick={() =>
-                          collectionInfo(property.collectionAddress)
-                        }
-                      >
-                        Get collectionInfo
-                      </Button>
-                    </>
+                        {startAndEnd(property.collectionAddress, 6)}
+                      </Link>
+                    </div>
                   )}
-                </div>
-              </CardFooter>
-            </Card>
-          ))}
+
+                  <div className="flex flex-row text-small justify-between w-full mt-3">
+                    <p className="text-white">Status:</p>
+                    <p className="text-white">
+                      {' '}
+                      {StatusToText[property.status]}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-row text-small justify-between w-full mt-3">
+                    <p className="text-white">Symbol:</p>
+                    <p className="text-white"> {property.symbol}</p>
+                  </div>
+                  <Button onClick={() => acceptProperty(property.id)}>
+                    Accept property by verifier only!
+                  </Button>
+                  <div className="gap-2 flex flex-col mt-8 items-center w-full">
+                    <Button color="danger" variant="light">
+                      Sell property
+                    </Button>
+                    <Button color="primary">Buy more</Button>
+                    {property.collectionAddress && (
+                      <>
+                        <Button
+                          color="primary"
+                          onClick={() => mint(property.collectionAddress)}
+                        >
+                          Mint
+                        </Button>
+                        <Button
+                          color="primary"
+                          onClick={() =>
+                            collectionInfo(property.collectionAddress)
+                          }
+                        >
+                          Get collectionInfo
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </CardFooter>
+              </Card>
+            ))}
+          </>
+          <>
+            {userProperties?.length === 0 && (
+              <p>
+                No tokens yet! Click button above to create your first property!
+              </p>
+            )}
+          </>
         </>
       )}
     </div>

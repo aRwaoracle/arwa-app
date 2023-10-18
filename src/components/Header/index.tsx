@@ -10,13 +10,14 @@ import styles from './styles.module.scss';
 const Header: FC = () => {
   return (
     <div className={styles.header}>
-      <Link href={'/'} className={styles.link}>
-        <Image className={styles.header_image} src={Arwa} alt={'Arwa'} />
-        aRwaoracle
-      </Link>
-      <Link className={styles.market} href={'market'}>
-        Market
-      </Link>
+      <div>
+        <Link href={'/'} className={styles.link}>
+          <Image className={styles.header_image} src={Arwa} alt={'Arwa'} />
+        </Link>
+        <Link className={`${styles.market} ${styles.link}`} href={'market'}>
+          Market
+        </Link>
+      </div>
 
       <div>
         <ConnectionButton />

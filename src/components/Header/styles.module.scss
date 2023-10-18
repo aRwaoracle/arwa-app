@@ -14,6 +14,13 @@
   }
 }
 
+.header > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
 .header .link {
   cursor: pointer;
   gap: 20px;
@@ -24,14 +31,12 @@
   margin: 0;
   font-size: 18px;
   padding: 1rem;
-  border: 1px solid rgba(var(--callout-border-rgb), 0.3);
-  border-radius: var(--main-border-radius);
+  color: var(--main-card-color);
 }
 
 .header_image {
   width: 120px;
   height: 60px;
-  border-radius: var(--main-border-radius);
 }
 .market {
   font-size: 18px;

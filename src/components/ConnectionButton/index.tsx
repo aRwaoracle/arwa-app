@@ -62,7 +62,7 @@ const ConnectionButton: FC = () => {
               return (
                 <Button
                   variant="outline"
-                  color="var(--main-color)"
+                  color="var(--main-card-color)"
                   onClick={go('/profile')}
                 >
                   <div className={styles.profile_content}>

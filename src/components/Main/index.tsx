@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
 import { useVerifierActions } from '@/hooks/blockchain/manager/use-verifier-actions';
 
-import Arwa from '../../../public/assets/aRwa_logo.png';
+import Arwa from '../../../public/assets/main-page.png';
 import { Button } from '../Button';
 
 import styles from './styles.module.scss';
@@ -40,6 +40,8 @@ const Main: React.FC = () => {
     console.log({ hash });
   };
 
+  console.log({ onClick, logProperties, acceptProperty });
+
   return (
     <div className={styles.main}>
       <div className={styles.content}>
@@ -49,7 +51,7 @@ const Main: React.FC = () => {
         {/* <Button color="var(--main-color)" onClick={onClick}>
           Tokenise your property
         </Button> */}
-        <Button color="var(--main-color)" onClick={go('/create')}>
+        <Button color="white" onClick={go('/create')}>
           Tokenise your property
         </Button>
 

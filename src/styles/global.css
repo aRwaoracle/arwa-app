@@ -17,7 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   color: #fff;
-  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+  background-image: linear-gradient(to top, #18191D 0%, #D6D6D7 100%);
 }
 
 * {
