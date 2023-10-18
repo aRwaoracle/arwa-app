@@ -68,31 +68,13 @@ const PropertyCards = (): JSX.Element => {
               </CardBody>
               <CardFooter className="flex-col items-start gap-1">
                 <p className="text-default-500 text-xl">{property.name}</p>
-                <p className="text-default-500 text-sm">{property.id}</p>
-                <p className="text-default-500 text-sm">{property.docs}</p>
-                <p className="text-default-500 text-sm">
-                  {property.collectionAddress}
-                </p>
-                <p className="text-default-500 text-sm">{property.verifier}</p>
-                <p className="text-default-500 text-sm">
-                  {StatusToText[property.status]}
-                </p>
-                <p className="text-default-500 text-sm">{property.owner}</p>
+
                 <div className="flex flex-row text-small justify-between w-full mt-3">
-                  <Skeleton isLoaded={load} className="rounded-lg">
-                    <p className="text-white">Tokens</p>
-                  </Skeleton>
-                  <p className="text-white">3/4000</p>
+                  <p className="text-white">Status:</p>
+                  <p className="text-white"> {StatusToText[property.status]}</p>
                 </div>
-                <div className="flex flex-row text-small justify-between w-full">
-                  <p className="text-white">Current value</p>
-                  <p className="text-white">0.015 ETH</p>
-                </div>
-                <div className="flex flex-row text-small justify-between w-full">
-                  <p className="text-white">Claimed value</p>
-                  <p className="text-white">0.00003 ETH</p>
-                </div>
-                <div className="gap-2 flex flex-col mt-8 items-center w-full">
+
+                {/* <div className="gap-2 flex flex-col mt-8 items-center w-full">
                   <Button color="danger" variant="light">
                     Sell property
                   </Button>
@@ -115,7 +97,7 @@ const PropertyCards = (): JSX.Element => {
                       </Button>
                     </>
                   )}
-                </div>
+                </div> */}
               </CardFooter>
             </Card>
           ))}
