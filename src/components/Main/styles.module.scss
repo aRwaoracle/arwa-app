@@ -2,17 +2,17 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .content {
-  flex-grow: 1;
-  padding: 20px;
-  background-color: var(--main-background-color);
-  border-radius: 50px;
   width: 80%;
 }
 
 .buttonContainer {
   margin: 20px 0;
   text-align: left;
+}
+.main_image {
+  border-radius: var(--main-border-radius);
 }

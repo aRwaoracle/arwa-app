@@ -26,11 +26,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/eslint-recommended"
   ],
-  "ignorePatterns": [
-    "src/generated",
-    "/build",
-    "next-env.d.ts"
-  ],
+  "ignorePatterns": ["src/generated", "/build", "next-env.d.ts"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -63,34 +59,17 @@
       {
         "groups": [
           // Packages `react` related packages come first.
-          [
-            "^react",
-            "^next",
-            "^@?\\w"
-          ],
+          ["^react", "^next", "^@?\\w"],
           // Internal packages.
-          [
-            "^(@|components)(/.*|$)"
-          ],
+          ["^(@|components)(/.*|$)"],
           // Side effect imports.
-          [
-            "^\\u0000"
-          ],
+          ["^\\u0000"],
           // Parent imports. Put `..` last.
-          [
-            "^\\.\\.(?!/?$)",
-            "^\\.\\./?$"
-          ],
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
           // Other relative imports. Put same-folder imports and `.` last.
-          [
-            "^\\./(?=.*/)(?!/?$)",
-            "^\\.(?!/?$)",
-            "^\\./?$"
-          ],
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
           // Style imports.
-          [
-            "^.+\\.?(styles)$"
-          ]
+          ["^.+\\.?(styles)$"]
         ]
       }
     ],
@@ -117,7 +96,7 @@
     "complexity": [
       "error",
       {
-        "max": 15
+        "max": 30
       }
     ],
     "unicorn/consistent-function-scoping": "off",

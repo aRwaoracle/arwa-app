@@ -1,6 +1,6 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable no-magic-numbers */
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -12,9 +12,10 @@ import {
   ModalFooter,
   ModalHeader,
 } from '@nextui-org/modal';
-import { Progress } from '@nextui-org/progress';
 import { motion } from 'framer-motion';
 import * as Yup from 'yup';
+
+import { useKycManager } from '@/hooks/blockchain/use-kyc-manager';
 
 import CustomInput from '../CustomInput';
 
@@ -49,7 +50,6 @@ const ProfileModal: React.FC<TProfileModal> = ({
     control,
     formState: { errors },
     getValues,
-    watch,
     reset,
   } = useForm<FormState>({
     resolver: yupResolver(schemaUser),
@@ -57,7 +57,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
   });
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<string>('');
-  const [progress, setProgress] = useState<number>(0);
+  const { updateKyc } = useKycManager();
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const changePhoto = (event): void => {
@@ -75,7 +75,6 @@ const ProfileModal: React.FC<TProfileModal> = ({
       hiddenFileInput.current.click();
     }
   };
-
   const discardClose = (): void => {
     reset(
       { name: '', surname: '' },
@@ -92,22 +91,13 @@ const ProfileModal: React.FC<TProfileModal> = ({
     onClose();
   };
 
-  useEffect(() => {
-    if (getValues('name') !== undefined)
-      setProgress((previous) =>
-        getValues('name') === '' ? previous - 33 : previous + 33,
-      );
-  }, [watch('name')]);
-  useEffect(() => {
-    if (getValues('surname') !== undefined)
-      setProgress((previous) =>
-        getValues('surname') === '' ? previous - 33 : previous + 33,
-      );
-  }, [watch('surname')]);
-  useEffect(() => {
-    if (image !== '') setProgress((previous) => previous + 33);
-  }, [image]);
-
+  const passKyc = async (): Promise<void> => {
+    updateKyc();
+    discardClose();
+  };
+  const disableKYCButton =
+    !getValues('name') || !getValues('surname') || !image;
+  console.log(disableKYCButton);
   return (
     <Modal
       backdrop="blur"
@@ -119,12 +109,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
       <ModalContent className="gap-3">
         <ModalHeader className="flex flex-col items-center gap-5">
           <p className={`${styles.header} font-orbitron`}>Pass KYC</p>
-          <Progress
-            aria-label="Loading..."
-            value={progress}
-            className="max-w-md"
-            classNames={{ base: 'bg-white/70 rounded-md	' }}
-          />
+
           <motion.div
             whileHover={{ scale: 1.05, opacity: 0.7 }}
             onClick={handleClick}
@@ -181,7 +166,11 @@ const ProfileModal: React.FC<TProfileModal> = ({
           <Button color="danger" variant="light" onPress={discardClose}>
             Close
           </Button>
-          <Button color="primary" onPress={discardClose}>
+          <Button
+            color="primary"
+            onPress={passKyc}
+            isDisabled={disableKYCButton}
+          >
             Save
           </Button>
         </ModalFooter>
