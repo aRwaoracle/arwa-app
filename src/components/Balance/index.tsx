@@ -3,6 +3,8 @@ import { useAccount, useBalance } from 'wagmi';
 
 import styles from './styles.module.scss';
 
+const decimalPlaces = 4;
+
 const Balance = (): JSX.Element => {
   const { address } = useAccount();
 
@@ -16,10 +18,13 @@ const Balance = (): JSX.Element => {
 
   if (balanceLoading) return <div>Fetching balance…</div>;
   if (isError) return <div>Error fetching balance</div>;
+  const formattedBalance = data?.formatted
+    ? Number.parseFloat(data?.formatted).toFixed(decimalPlaces)
+    : '';
   return (
     <div className={styles.main}>
       <p>
-        Balance: {data?.formatted} {data?.symbol}
+        Balance: {formattedBalance} {data?.symbol}
       </p>
     </div>
   );
