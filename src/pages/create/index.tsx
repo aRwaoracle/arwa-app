@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { Button } from '@nextui-org/button';
 import { Card } from '@nextui-org/card';
 import { Input } from '@nextui-org/input';
-import { Skeleton } from '@nextui-org/skeleton';
 import { motion } from 'framer-motion';
 
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
@@ -128,14 +127,19 @@ const Create: React.FC = () => {
       {isClient && (
         <div>
           <div className={styles.kycContainer}>
-            <Card
-              className={`mb-4 ${
-                isKycPassed ? 'bg-green-500 w-96 h-40' : 'bg-red-500'
-              }`}
-            >
-              <Skeleton
-                isLoaded={!isLoading}
-                className={`rounded-lg ${isKycPassed ? 'w-96 h-44' : ''}`}
+            {isLoading ? (
+              <div
+                className={`mb-4 ${
+                  isKycPassed ? 'bg-gray-500 w-96 h-40' : 'bg-gray-500 h-96'
+                } flex items-center justify-center animate-pulse rounded-2xl`}
+              >
+                <p className="text-center ">Loading...</p>
+              </div>
+            ) : (
+              <Card
+                className={`mb-4 ${
+                  isKycPassed ? 'bg-green-500 w-96 h-40' : 'bg-red-500'
+                }`}
               >
                 <div className={`p-4 rounded-md font-orbitron`}>
                   {isKycPassed ? (
@@ -194,8 +198,8 @@ const Create: React.FC = () => {
                     </>
                   )}
                 </div>
-              </Skeleton>
-            </Card>
+              </Card>
+            )}
             <Input
               name="collectionName"
               label="Collection name"
