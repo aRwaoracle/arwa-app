@@ -175,7 +175,7 @@ const Create: React.FC = () => {
                         onChange={handleInputChange}
                         isInvalid={isInvalidName}
                         errorMessage={isInvalidName && errorMessage}
-                        className="my-4"
+                        className="my-4 text-gray-700"
                       />
                       <Input
                         name="surname"
@@ -184,7 +184,7 @@ const Create: React.FC = () => {
                         onChange={handleInputChange}
                         isInvalid={isInvalidSurname}
                         errorMessage={isInvalidSurname && errorMessage}
-                        className="my-4"
+                        className="my-4 text-gray-700"
                       />
                       <Button
                         onClick={updateKyc}
@@ -205,7 +205,7 @@ const Create: React.FC = () => {
               label="Collection name"
               value={collectionName}
               onChange={handleInputChange}
-              className="my-4"
+              className="my-4 text-gray-700"
               isInvalid={isInvalidCollectionName}
               errorMessage={isInvalidCollectionName && errorMessage}
               isDisabled={!isKycPassed}
@@ -215,7 +215,7 @@ const Create: React.FC = () => {
               label="Document reference"
               value={documentReference}
               onChange={handleInputChange}
-              className="my-4"
+              className="my-4 text-gray-700"
               isInvalid={isInvalidUrl}
               errorMessage={isInvalidUrl && 'Please enter a valid URL'}
               isDisabled={!isKycPassed}
@@ -225,7 +225,7 @@ const Create: React.FC = () => {
               label="Collection symbol"
               value={collectionSymbol}
               onChange={handleInputChange}
-              className="my-4"
+              className="my-4 text-gray-700"
               isInvalid={isInvalidCollectionSymbol}
               errorMessage={isInvalidCollectionSymbol && errorMessage}
               isDisabled={!isKycPassed}
