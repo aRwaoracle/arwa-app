@@ -4,7 +4,7 @@ import Main from '@/components/Main';
 import { useArwaUser } from '@/hooks/blockchain/manager/use-arwa-user';
 
 export default function IndexPage(): React.ReactNode {
-  const { isVerifier, userProperties } = useArwaUser();
+  const { isVerifier, userProperties } = useArwaUser(); // add to profile
 
   useEffect(() => {
     console.log(isVerifier, userProperties);

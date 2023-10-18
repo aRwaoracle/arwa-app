@@ -1,11 +1,14 @@
 import { memo, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 
-import { AddressType, StatusToText } from '@/data';
+import { AddressType, AddressZero, StatusToText } from '@/data';
 import { useArwaUser } from '@/hooks/blockchain/manager/use-arwa-user';
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
+import { useVerifierActions } from '@/hooks/blockchain/manager/use-verifier-actions';
+import { startAndEnd } from '@/utils';
 
 import Skeleton from '../Skeleton';
 
@@ -16,6 +19,12 @@ const PropertyCards = (): JSX.Element => {
   const [load, setload] = useState(false);
   const { userProperties } = useArwaUser();
   const { mintTokens, getPropertyCollectionInfo } = useProperty();
+  const { acceptProperty: _acceptProperty } = useVerifierActions();
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const acceptProperty = async (id: number) => {
+    const { hash } = await _acceptProperty(id, 1_000_000_000_000_000); //wei
+    console.log({ hash });
+  };
 
   useEffect(() => {
     setIsClient(true);
@@ -48,7 +57,6 @@ const PropertyCards = (): JSX.Element => {
             <Card
               shadow="sm"
               key={index}
-              isPressable
               onPress={(): void => console.log('item pressed')}
               className={styles.cardContainer}
             >
@@ -69,12 +77,32 @@ const PropertyCards = (): JSX.Element => {
               <CardFooter className="flex-col items-start gap-1">
                 <p className="text-default-500 text-xl">{property.name}</p>
 
+                {property.collectionAddress !== AddressZero && (
+                  <div className="flex flex-row text-small justify-between w-full mt-3">
+                    <p className="text-white">Collection address:</p>
+                    <Link
+                      className="text-white text-ellipsis"
+                      href={`https://goerli.etherscan.io/address/${property.collectionAddress}`}
+                      target="_blank"
+                    >
+                      {startAndEnd(property.collectionAddress, 6)}
+                    </Link>
+                  </div>
+                )}
+
                 <div className="flex flex-row text-small justify-between w-full mt-3">
                   <p className="text-white">Status:</p>
                   <p className="text-white"> {StatusToText[property.status]}</p>
                 </div>
 
-                {/* <div className="gap-2 flex flex-col mt-8 items-center w-full">
+                <div className="flex flex-row text-small justify-between w-full mt-3">
+                  <p className="text-white">Symbol:</p>
+                  <p className="text-white"> {property.symbol}</p>
+                </div>
+                <Button onClick={() => acceptProperty(property.id)}>
+                  Accept property by verifier only!
+                </Button>
+                <div className="gap-2 flex flex-col mt-8 items-center w-full">
                   <Button color="danger" variant="light">
                     Sell property
                   </Button>
@@ -97,7 +125,7 @@ const PropertyCards = (): JSX.Element => {
                       </Button>
                     </>
                   )}
-                </div> */}
+                </div>
               </CardFooter>
             </Card>
           ))}

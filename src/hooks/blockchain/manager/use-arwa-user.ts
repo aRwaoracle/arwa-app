@@ -23,6 +23,7 @@ export const useArwaUser = () => {
     abi: ArwaManagerAbi,
     address: BlockchainConstants.goerli.arwaManager,
     functionName: 'userProperties',
+    // args: ['0x0dA55Bb04EAbF26a00B0B90D27c591E822323ab2'],
     args: [address],
   });
 
