@@ -20,4 +20,8 @@ const Skeleton: React.FC<TSkeleton> = ({ children, isLoaded, className }) => {
   );
 };
 
-export default React.memo(Skeleton);
+export default React.memo(
+  Skeleton,
+  (previousProperties, nextProperties) =>
+    previousProperties.isLoaded === nextProperties.isLoaded,
+);
