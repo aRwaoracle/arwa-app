@@ -5,10 +5,16 @@ import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 
-import { AddressType, AddressZero, PropertyType, StatusToText } from '@/data';
+import {
+  AddressType,
+  AddressZero,
+  PropertyStatus,
+  PropertyType,
+  StatusToText,
+} from '@/data';
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
 import { useVerifierActions } from '@/hooks/blockchain/manager/use-verifier-actions';
-import { startAndEnd } from '@/utils';
+import { startAndEnd, StatusToColor } from '@/utils';
 
 import Skeleton from '../Skeleton';
 
@@ -36,13 +42,6 @@ const CardProfile: React.FC<TCardProfile> = ({
   const mint = async (collectionAddress: AddressType): Promise<void> => {
     const hash = await mintTokens(collectionAddress, 20);
     console.log({ hash });
-  };
-
-  const collectionInfo = async (
-    collectionAddress: AddressType,
-  ): Promise<void> => {
-    const result = await getPropertyCollectionInfo(collectionAddress);
-    console.log({ result });
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -97,27 +96,34 @@ const CardProfile: React.FC<TCardProfile> = ({
       });
   };
 
+  const needVerify =
+    isVerifier &&
+    (property.status === PropertyStatus.Pending ||
+      property.status === PropertyStatus.Shipped);
+
   return (
     <Card
       shadow="sm"
       onPress={(): void => console.log('item pressed')}
-      className="w-full bg-[var(--main-card-color)] cursor-default"
+      className="w-full bg-[var(--main-card-color)] cursor-default pb-2"
     >
       <CardBody className="overflow-visible p-0 shadow-lg">
         <Skeleton isLoaded={load}>{memorizedImage}</Skeleton>
       </CardBody>
       <CardFooter className="flex-col items-start gap-1">
         <p className="text-default-500 text-xl">{property.name}</p>
-        {memorizedAdress}
-        <div className="flex flex-row text-small justify-between w-full mt-3">
+        <div className="flex flex-row text-small justify-between w-full mt-3 items-center">
           <p className="text-white">Status:</p>
-          <p className="text-white"> {StatusToText[property.status]}</p>
+          <Button color={StatusToColor[property.status]} disabled size="sm">
+            {StatusToText[property.status]}
+          </Button>
         </div>
+        {memorizedAdress}
         <div className="flex flex-row text-small justify-between w-full mt-3">
           <p className="text-white">Symbol:</p>
           <p className="text-white"> {property.symbol}</p>
         </div>
-        {isVerifier && (
+        {needVerify && (
           <Button
             color="primary"
             onPress={goWithQuery('/approve')}
