@@ -25,15 +25,17 @@ const Profile: FC = () => {
       <div className={styles.content}>
         <div>{isClient && <ProfileInfo />}</div>
       </div>
-      <div>
-        <div className="flex flex-row w-full justify-between items-center">
-          <p className={styles.tokenText}>Your tokens</p>
-          <Button onClick={go('/create')} color="danger">
-            Create new
-          </Button>
+      {isClient && (
+        <div>
+          <div className="flex flex-row w-full justify-between items-center">
+            <p className={styles.tokenText}>Your tokens</p>
+            <Button onClick={go('/create')} color="danger">
+              Create new
+            </Button>
+          </div>
+          <ProfileCards />
         </div>
-        <ProfileCards />
-      </div>
+      )}
     </div>
   );
 };
