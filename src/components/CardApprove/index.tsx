@@ -65,22 +65,18 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     mode: 'onChange',
   });
 
-  const go = (url: string) => {
-    return async () => await push(url);
-  };
-
   const acceptProperty = async (): Promise<void> => {
     const { hash } = await _acceptProperty(
       id,
       Number(getValues('amount')) * ethToWei,
     ); //wei
     console.log({ hash });
-    go('/profile');
+    push('/profile');
   };
   const rejectProperty = async (): Promise<void> => {
     const { hash } = await _rejectProperty(id);
     console.log({ hash });
-    go('/profile');
+    push('/profile');
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -96,8 +92,10 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
       const result = await getPropertyInfo(id);
       setProperty(result);
     };
-    propertyInfo();
-  }, []);
+    if (id) {
+      propertyInfo();
+    }
+  }, [id]);
 
   return (
     <Card
