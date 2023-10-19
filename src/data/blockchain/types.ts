@@ -7,6 +7,18 @@ export type BlockchainConstantsType = {
     kyc: AddressType;
     arwaManager: AddressType;
   };
+  mantleTeestnet: {
+    kyc: AddressType;
+    arwaManager: AddressType;
+  };
+  scrollSepolia: {
+    kyc: AddressType;
+    arwaManager: AddressType;
+  };
+  polygonzkEvmTestnet: {
+    kyc: AddressType;
+    arwaManager: AddressType;
+  };
 };
 
 export type PropertyType = {
