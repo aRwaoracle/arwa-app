@@ -2,7 +2,7 @@ import { memo, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button } from '@nextui-org/button';
-import { Card, CardBody, CardFooter } from '@nextui-org/card';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 
 import {
@@ -52,42 +52,6 @@ const CardProfile: React.FC<TCardProfile> = ({
     }
   };
 
-  const memorizedImage = useMemo(
-    () => (
-      <Image
-        removeWrapper
-        radius="none"
-        alt={'home'}
-        className="z-0 w-full h-full object-cover"
-        src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-        onLoad={handleLoad}
-        width={100}
-        height={65}
-      />
-    ),
-    [load],
-  );
-
-  const memorizedAdress = useMemo(
-    () => (
-      <>
-        {property.collectionAddress !== AddressZero && (
-          <div className="flex flex-row text-small justify-between w-full mt-3">
-            <p className="text-white">Collection address:</p>
-            <Link
-              className="text-white text-ellipsis"
-              href={`https://goerli.etherscan.io/address/${property.collectionAddress}`}
-              target="_blank"
-            >
-              {startAndEnd(property.collectionAddress, adressLenght)}
-            </Link>
-          </div>
-        )}
-      </>
-    ),
-    [property.collectionAddress],
-  );
-
   const goWithQuery = (url: string): (() => Promise<boolean>) => {
     return async () =>
       await push({
@@ -100,6 +64,7 @@ const CardProfile: React.FC<TCardProfile> = ({
     isVerifier &&
     (property.status === PropertyStatus.Pending ||
       property.status === PropertyStatus.Shipped);
+  const canMint = !isVerifier && property.status === PropertyStatus.Accepted;
 
   return (
     <Card
@@ -107,10 +72,19 @@ const CardProfile: React.FC<TCardProfile> = ({
       onPress={(): void => console.log('item pressed')}
       className="w-full bg-[var(--main-card-color)] cursor-default pb-2"
     >
-      <CardBody className="overflow-visible p-0 shadow-lg">
-        <Skeleton isLoaded={load}>{memorizedImage}</Skeleton>
-      </CardBody>
-      <CardFooter className="flex-col items-start gap-1">
+      <Skeleton isLoaded={load}>
+        <Image
+          removeWrapper
+          radius="none"
+          alt={'home'}
+          className="z-0 w-full h-full object-cover"
+          src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+          onLoad={handleLoad}
+          width={100}
+          height={65}
+        />
+      </Skeleton>
+      <CardBody className="flex-col items-start gap-1">
         <p className="text-default-500 text-xl">{property.name}</p>
         <div className="flex flex-row text-small justify-between w-full mt-3 items-center">
           <p className="text-white">Status:</p>
@@ -118,7 +92,18 @@ const CardProfile: React.FC<TCardProfile> = ({
             {StatusToText[property.status]}
           </Button>
         </div>
-        {memorizedAdress}
+        {property.collectionAddress !== AddressZero && (
+          <div className="flex flex-row text-small justify-between w-full mt-3">
+            <p className="text-white">Collection address:</p>
+            <Link
+              className="text-white text-ellipsis"
+              href={`https://goerli.etherscan.io/address/${property.collectionAddress}`}
+              target="_blank"
+            >
+              {startAndEnd(property.collectionAddress, adressLenght)}
+            </Link>
+          </div>
+        )}
         <div className="flex flex-row text-small justify-between w-full mt-3">
           <p className="text-white">Symbol:</p>
           <p className="text-white"> {property.symbol}</p>
@@ -130,6 +115,15 @@ const CardProfile: React.FC<TCardProfile> = ({
             className="align-middle w-full mt-4"
           >
             Take to work
+          </Button>
+        )}
+        {canMint && (
+          <Button
+            color="primary"
+            onPress={goWithQuery('/mint')}
+            className="align-middle w-full mt-4"
+          >
+            Mint
           </Button>
         )}
         {/* <Button onClick={(): Promise<void> => acceptProperty(property.id)}>
@@ -159,7 +153,7 @@ const CardProfile: React.FC<TCardProfile> = ({
             </>
           )}
         </div> */}
-      </CardFooter>
+      </CardBody>
     </Card>
   );
 };

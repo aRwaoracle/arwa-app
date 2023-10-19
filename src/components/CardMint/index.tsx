@@ -44,7 +44,7 @@ const schemaUser = Yup.object().shape({
     .required(),
 });
 
-const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
+const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
   const { push } = useRouter();
 
   const { getPropertyInfo } = useProperty();
@@ -110,7 +110,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
             hideHeader
             shadow="lg"
             aria-label="Example static collection table"
-            classNames={{ wrapper: 'bg-[var(--main-card-color)]' }}
+            classNames={{ wrapper: 'bg-[var( --main-card-color)]' }}
           >
             <TableHeader>
               <TableColumn>type</TableColumn>
@@ -221,4 +221,4 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
   );
 };
 
-export default memo(CardApprove);
+export default memo(CardMint);
