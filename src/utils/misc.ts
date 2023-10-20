@@ -3,6 +3,9 @@
 
 import { PropertyStatus } from '@/data';
 
+export const ethToWei = 1_000_000_000_000_000_000;
+export const adressLenght = 6;
+
 export const startAndEnd = (
   string_: string | undefined,
   gap: number,

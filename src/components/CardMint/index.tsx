@@ -3,26 +3,17 @@ import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/button';
-import { Card, CardBody, CardFooter } from '@nextui-org/card';
-import { Image } from '@nextui-org/image';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { Input } from '@nextui-org/input';
-import { Link } from '@nextui-org/link';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from '@nextui-org/table';
+import { Tooltip } from '@nextui-org/tooltip';
+import { useAccount, useBalance } from 'wagmi';
 import * as Yup from 'yup';
 
-import { PropertyType, StatusToText } from '@/data';
+import { PropertyType } from '@/data';
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
-import { useVerifierActions } from '@/hooks/blockchain/manager/use-verifier-actions';
-import { StatusToColor } from '@/utils';
+import { adressLenght, ethToWei } from '@/utils';
 
-import Skeleton from '../Skeleton';
+import CardMintTable from '../CardMintTable';
 
 type TCardProfile = {
   id: number;
@@ -32,29 +23,25 @@ type FormState = {
   amount: string;
 };
 
-const ethToWei = 1_000_000_000_000_000_000;
-
 const schemaUser = Yup.object().shape({
-  amount: Yup.string()
-    // eslint-disable-next-line security/detect-unsafe-regex
-    .matches(/(?<!-)(?<!\d)[1-9]\d*(?:\.\d{0,2})?/)
-    // eslint-disable-next-line no-magic-numbers
-    .max(14)
-    .min(1)
-    .required(),
+  amount: Yup.string().matches(/^\d+$/).max(adressLenght).min(1).required(),
 });
 
 const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
   const { push } = useRouter();
+  const { address } = useAccount();
+  const { data } = useBalance({ address });
 
-  const { getPropertyInfo } = useProperty();
-  const { acceptProperty: _acceptProperty, rejectProperty: _rejectProperty } =
-    useVerifierActions();
+  const { getPropertyInfo, getPropertyCollectionInfo } = useProperty();
+  const { mintTokens } = useProperty();
 
-  const [load, setload] = useState(false);
   const [property, setProperty] = useState<PropertyType>();
+  const [propertyCollection, setPropertyCollection] = useState<{
+    maxSupply: number;
+    propertryPrice: number;
+  }>();
 
-  const loaded = property !== undefined;
+  const loaded = property !== undefined && propertyCollection !== undefined;
 
   const {
     control,
@@ -65,25 +52,34 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     mode: 'onChange',
   });
 
-  const acceptProperty = async (): Promise<void> => {
-    const { hash } = await _acceptProperty(
-      id,
-      Number(getValues('amount')) * ethToWei,
-    ); //wei
-    console.log({ hash });
-    push('/profile');
-  };
-  const rejectProperty = async (): Promise<void> => {
-    const { hash } = await _rejectProperty(id);
-    console.log({ hash });
-    push('/profile');
+  const sumCost = (): string => {
+    if (propertyCollection) {
+      if (
+        getValues('amount') === undefined ||
+        getValues('amount') === '' ||
+        getValues('amount') === '0'
+      ) {
+        return '0';
+      }
+      return Number.parseFloat(
+        String(
+          propertyCollection.propertryPrice /
+            ethToWei /
+            Number(getValues('amount')),
+        ),
+      ).toFixed(adressLenght);
+    }
+    return '0';
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  //@ts-ignore
-  const handleLoad = (info): void => {
-    if (info) {
-      setload(true);
+  const mint = async (): Promise<void> => {
+    if (property) {
+      const hash = await mintTokens(
+        property.collectionAddress,
+        Number(getValues('amount')),
+      );
+      console.log({ hash });
+      push('/profile');
     }
   };
 
@@ -97,124 +93,97 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (property) {
+      const propertyCollectionFunction = async (): Promise<void> => {
+        const result = await getPropertyCollectionInfo(
+          property.collectionAddress,
+        );
+        setPropertyCollection(result);
+      };
+      propertyCollectionFunction();
+    }
+  }, [property]);
+
   return (
     <Card
       shadow="sm"
-      onPress={(): void => console.log('item pressed')}
       className="w-full bg-[var(--main-card-color)] cursor-default"
     >
+      <CardHeader className="text-[var(--main-text-color)] text-3xl pl-5">
+        Mint your tokens
+      </CardHeader>
       <CardBody className="flex-col items-start gap-10 dark">
         {loaded && (
-          <Table
-            isStriped
-            hideHeader
-            shadow="lg"
-            aria-label="Example static collection table"
-            classNames={{ wrapper: 'bg-[var( --main-card-color)]' }}
-          >
-            <TableHeader>
-              <TableColumn>type</TableColumn>
-              <TableColumn>value</TableColumn>
-            </TableHeader>
-            <TableBody>
-              <TableRow key="1">
-                <TableCell>
-                  <p className="text-default-500 text-5xl">{property.name}</p>
-                </TableCell>
-                <TableCell>
-                  <Button
-                    color={StatusToColor[property.status]}
-                    className="w-1/2"
-                    disabled
-                  >
-                    {StatusToText[property.status]}
-                  </Button>
-                </TableCell>
-              </TableRow>
-              <TableRow key="2">
-                <TableCell>
-                  <p className="text-default-500 text-3xl">Image:</p>
-                </TableCell>
-                <TableCell className="overflow-visible p-3 shadow-lg">
-                  <Skeleton isLoaded={load}>
-                    <Image
-                      removeWrapper
-                      radius="lg"
-                      alt={'home'}
-                      className="z-0 w-6/12	 h-w-6/12	 object-cover"
-                      src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-                      onLoad={handleLoad}
-                      width={100}
-                      height={65}
-                    />
-                  </Skeleton>
-                </TableCell>
-              </TableRow>
-              <TableRow key="3">
-                <TableCell>
-                  <p className="text-default-500 text-3xl">Link to docs:</p>
-                </TableCell>
-                <TableCell>
-                  <Link
-                    isBlock
-                    showAnchorIcon
-                    href={property.docs}
-                    color="primary"
-                    className="text-3xl"
-                  >
-                    Redirect to docs
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow key="4">
-                <TableCell>
-                  <p className="text-default-500 text-3xl">Symbol:</p>
-                </TableCell>
-                <TableCell>
-                  <p className="text-white text-3xl"> {property.symbol}</p>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+          <CardMintTable
+            property={property}
+            propertyCollection={propertyCollection}
+          />
         )}
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }): JSX.Element => (
-            <Input
-              isRequired
-              type="number"
-              label="Price"
-              placeholder="0.00"
-              labelPlacement="outside"
-              onChange={onChange}
-              value={value}
-              isInvalid={Boolean(errors.amount)}
-              classNames={{
-                label: 'text-2xl',
-                input: 'text-2xl text-white/70',
-                inputWrapper: 'h-12',
-              }}
-              startContent={
-                <div className="pointer-events-none flex items-center">
-                  <span className="text-default-400 text-2xl">ETH</span>
-                </div>
-              }
+        <div className="gap-2 flex flex-col w-max">
+          {loaded && (
+            <Controller
+              control={control}
+              render={({ field: { onChange, value } }): JSX.Element => (
+                <Input
+                  isRequired
+                  type="number"
+                  label={
+                    <Tooltip
+                      key={'foreground'}
+                      color={'foreground'}
+                      content={
+                        'Supply cost on tokens: 100(ETH) / 20* = 5 (ETH)'
+                      }
+                      className="dark"
+                      placement="top-start"
+                      radius="sm"
+                    >
+                      <Button
+                        variant="flat"
+                        className="bg-transparent text-3xl w-auto items-start justify-start p-0"
+                      >
+                        Supply
+                      </Button>
+                    </Tooltip>
+                  }
+                  placeholder="0.00" // do without .00
+                  labelPlacement="outside"
+                  onChange={onChange}
+                  value={value}
+                  isInvalid={Boolean(errors.amount)}
+                  classNames={{
+                    label: 'text-2xl',
+                    input: 'text-2xl text-white/70 w-min ',
+                    inputWrapper: 'h-12 m-0 ',
+                  }}
+                  startContent={
+                    <p className="text-white text-3xl">
+                      {propertyCollection.propertryPrice / ethToWei}{' '}
+                      {data?.symbol} /
+                    </p>
+                  }
+                  endContent={
+                    <p className="text-white text-3xl w-auto">
+                      = {sumCost()} {data?.symbol} per token
+                    </p>
+                  }
+                />
+              )}
+              name="amount"
             />
           )}
-          name="amount"
-        />
+        </div>
       </CardBody>
-      <CardFooter className="flex-row gap-10 pl-5 mb-5">
+      <CardFooter className="pl-5 mb-5">
         <Button
           color="success"
           size="lg"
           isDisabled={!isValid}
-          onPress={acceptProperty}
+          onPress={mint}
+          className="w-1/4"
         >
           Accept
-        </Button>
-        <Button color="danger" size="lg" onPress={rejectProperty}>
-          Reject
         </Button>
       </CardFooter>
     </Card>
