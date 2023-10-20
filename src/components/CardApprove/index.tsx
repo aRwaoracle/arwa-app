@@ -147,7 +147,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
                       radius="lg"
                       alt={'home'}
                       className="z-0 w-6/12	 h-w-6/12	 object-cover"
-                      src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+                      src="https://img.freepik.com/free-photo/3d-rendering-house-model_23-2150799627.jpg?t=st=1697384061~exp=1697387661~hmac=dfc68101004a144fc8b1d9db5adcd73b8522defb78b64db1bb087ccb13754c4f&w=1480"
                       onLoad={handleLoad}
                       width={100}
                       height={65}

@@ -127,7 +127,7 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
                       </Button>
                     </Tooltip>
                   }
-                  placeholder="0.00" // do without .00
+                  placeholder="0" // do without .00
                   labelPlacement="outside"
                   onChange={onChange}
                   value={value}

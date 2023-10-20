@@ -80,7 +80,7 @@ const Create: React.FC = () => {
           href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
           target="_blank"
         >
-          A link to your hash
+          Link to hash
         </Link>,
         {
           id: notification,
