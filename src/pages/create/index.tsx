@@ -74,10 +74,6 @@ const Create: React.FC = () => {
         collectionSymbol,
       );
 
-      toast.success(`${hash}`, {
-        id: notification,
-        duration: 4000,
-      });
       toast.success(
         <Link
           className="text-black text-ellipsis underline"
