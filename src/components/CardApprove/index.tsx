@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/button';
-import { Card, CardBody, CardFooter } from '@nextui-org/card';
+import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { Image } from '@nextui-org/image';
 import { Input } from '@nextui-org/input';
 import { Link } from '@nextui-org/link';
@@ -103,6 +103,9 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
       onPress={(): void => console.log('item pressed')}
       className="w-full bg-[var(--main-card-color)] cursor-default"
     >
+      <CardHeader className="text-[var(--main-text-color)] text-3xl pl-5">
+        Verify tokens
+      </CardHeader>
       <CardBody className="flex-col items-start gap-10 dark">
         {loaded && (
           <Table
@@ -110,7 +113,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
             hideHeader
             shadow="lg"
             aria-label="Example static collection table"
-            classNames={{ wrapper: 'bg-[var( --main-card-color)]' }}
+            classNames={{ wrapper: 'bg-[var(--main-card-color)]' }}
           >
             <TableHeader>
               <TableColumn>type</TableColumn>

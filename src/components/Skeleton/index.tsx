@@ -1,7 +1,7 @@
 import React from 'react';
 import { Skeleton as SkeletonNext } from '@nextui-org/skeleton';
 
-import styles from './styles.module.scss';
+// import styles from './styles.module.scss';
 
 type TSkeleton = {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ type TSkeleton = {
 const Skeleton: React.FC<TSkeleton> = ({ children, isLoaded, className }) => {
   return (
     <div>
-      {!isLoaded && <p className={`${styles.text} text-white`}>Loading</p>}
+      {/* {!isLoaded && <p className={`${styles.text} text-white`}>Loading</p>} */}
       <SkeletonNext isLoaded={isLoaded} className={`${className} dark`}>
         {children}
       </SkeletonNext>
