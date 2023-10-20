@@ -5,7 +5,7 @@ export default {
   content: [
     // Or if using `src` directory:
     './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './node_modules/@nextui-org/theme/dist/components/(button|card|image|modal|input|progress|skeleton|table|link|tabs|tooltip|select).js',
+    './node_modules/@nextui-org/theme/dist/components/(button|card|image|modal|input|progress|skeleton|table|link|tabs|select).js',
   ],
   theme: {
     extend: {
