@@ -11,7 +11,7 @@ import * as Yup from 'yup';
 
 import { PropertyType } from '@/data';
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
-import { adressLenght, ethToWei } from '@/utils';
+import { adressLenght, ethToWei, sumCost } from '@/utils';
 
 import CardMintTable from '../CardMintTable';
 
@@ -51,26 +51,6 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     resolver: yupResolver(schemaUser),
     mode: 'onChange',
   });
-
-  const sumCost = (): string => {
-    if (propertyCollection) {
-      if (
-        getValues('amount') === undefined ||
-        getValues('amount') === '' ||
-        getValues('amount') === '0'
-      ) {
-        return '0';
-      }
-      return Number.parseFloat(
-        String(
-          propertyCollection.propertryPrice /
-            ethToWei /
-            Number(getValues('amount')),
-        ),
-      ).toFixed(adressLenght);
-    }
-    return '0';
-  };
 
   const mint = async (): Promise<void> => {
     if (property) {
@@ -165,7 +145,8 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
                   }
                   endContent={
                     <p className="text-white text-3xl w-auto">
-                      = {sumCost()} {data?.symbol} per token
+                      = {sumCost(propertyCollection, getValues('amount'))}{' '}
+                      {data?.symbol} per token
                     </p>
                   }
                 />

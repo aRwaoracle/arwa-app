@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Button } from '@nextui-org/button';
@@ -11,8 +11,10 @@ import {
   PropertyType,
   StatusToText,
 } from '@/data';
+import { useProperty } from '@/hooks/blockchain/manager/use-property';
 import { startAndEnd, StatusToColor } from '@/utils';
 
+import CardProfileMinted from '../CardProfileMinted';
 import Skeleton from '../Skeleton';
 
 type TCardProfile = {
@@ -27,8 +29,13 @@ const CardProfile: React.FC<TCardProfile> = ({
   isVerifier,
 }): JSX.Element => {
   const { push } = useRouter();
-  const [load, setload] = useState(false);
 
+  const [load, setload] = useState(false);
+  const { getPropertyCollectionInfo } = useProperty();
+  const [propertyCollection, setPropertyCollection] = useState<{
+    maxSupply: number;
+    propertryPrice: number;
+  }>();
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   //@ts-ignore
   const handleLoad = (info): void => {
@@ -49,7 +56,23 @@ const CardProfile: React.FC<TCardProfile> = ({
     isVerifier &&
     (property.status === PropertyStatus.Pending ||
       property.status === PropertyStatus.Shipped);
-  const canMint = !isVerifier && property.status === PropertyStatus.Accepted;
+  const canMint =
+    !isVerifier &&
+    property.status === PropertyStatus.Accepted &&
+    propertyCollection &&
+    propertyCollection.maxSupply === 0;
+
+  useEffect(() => {
+    if (property) {
+      const propertyCollectionFunction = async (): Promise<void> => {
+        const result = await getPropertyCollectionInfo(
+          property.collectionAddress,
+        );
+        setPropertyCollection(result);
+      };
+      propertyCollectionFunction();
+    }
+  }, [property.collectionAddress]);
 
   return (
     <Card
@@ -93,6 +116,7 @@ const CardProfile: React.FC<TCardProfile> = ({
           <p className="text-white">Symbol:</p>
           <p className="text-white"> {property.symbol}</p>
         </div>
+        <CardProfileMinted propertyCollection={propertyCollection} />
         {needVerify && (
           <Button
             color="primary"
