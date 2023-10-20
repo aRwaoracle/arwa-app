@@ -9,6 +9,7 @@ import { useKycManager } from '@/hooks/blockchain/use-kyc-manager';
 import SuccessIcon from '../../../public/assets/success.svg';
 import Balance from '../Balance';
 import { Button } from '../Button';
+import NetworkSwitcher from '../NetworkSwitcher';
 import ProfileModal from '../ProfileModal';
 
 import styles from './styles.module.scss';
@@ -27,11 +28,12 @@ const ProfileInfo = (): JSX.Element => {
       <div className={styles.infoContainer}>
         <div className="flex flex-row justify-between">
           <Balance />
-          {!isKycPassed && (
-            <Button color="var(--main-color)" onClick={onOpen}>
+          {!isKycPassed && !isLoading && (
+            <Button color="rgb(219, 7, 7)" onClick={onOpen}>
               <p>Pass KYC</p>
             </Button>
           )}
+          <NetworkSwitcher />
         </div>
         <div className={styles.kycContainer}>
           {isLoading ? (
@@ -45,12 +47,16 @@ const ProfileInfo = (): JSX.Element => {
               }}
             >
               {isKycPassed ? 'Kyc passed' : 'Kyc not passed'}
-              <Image
-                src={SuccessIcon}
-                alt={'Success icon'}
-                width={28}
-                height={28}
-              />
+              {isKycPassed ? (
+                <Image
+                  src={SuccessIcon}
+                  alt={'Success icon'}
+                  width={28}
+                  height={28}
+                />
+              ) : (
+                <></>
+              )}
             </p>
           )}
         </div>
