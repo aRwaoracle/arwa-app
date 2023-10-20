@@ -70,7 +70,12 @@ const Create: React.FC = () => {
   };
 
   const validateText = (value: string): boolean => {
-    const textPattern = /^[A-Za-z-]+$/;
+    const textPattern = /^[A-Za-z]+$/;
+    return textPattern.test(value);
+  };
+
+  const validateTextAndNumbers = (value: string): boolean => {
+    const textPattern = /^[\dA-Za-z]+$/;
     return textPattern.test(value);
   };
 
@@ -78,7 +83,6 @@ const Create: React.FC = () => {
     const urlPattern = /^(https?|ftp):\/\/[^\s#$./?].\S*$/i;
     return urlPattern.test(value);
   };
-
   const isInvalid = (
     value: string,
     pattern: (value: string) => boolean,
@@ -87,7 +91,10 @@ const Create: React.FC = () => {
     return !pattern(value);
   };
 
-  const isInvalidCollectionName = isInvalid(collectionName, validateText);
+  const isInvalidCollectionName = isInvalid(
+    collectionName,
+    validateTextAndNumbers,
+  );
   const isInvalidCollectionSymbol = isInvalid(collectionSymbol, validateText);
   const isInvalidName = isInvalid(userName, validateText);
   const isInvalidSurname = isInvalid(surname, validateText);
@@ -121,6 +128,8 @@ const Create: React.FC = () => {
 
   const disableKYCButton = !userName || !surname || !image;
   const errorMessage = 'Please enter valid text (only letters)';
+  const errorMessageCollectionName =
+    'Please enter valid text (only letters and numbers)';
 
   return (
     <div>
@@ -174,8 +183,12 @@ const Create: React.FC = () => {
                         value={userName}
                         onChange={handleInputChange}
                         isInvalid={isInvalidName}
-                        errorMessage={isInvalidName && errorMessage}
-                        className="my-4 text-gray-700"
+                        errorMessage={
+                          isInvalidName && (
+                            <p className="text-black">{errorMessage}</p>
+                          )
+                        }
+                        className="my-4 text-black"
                       />
                       <Input
                         name="surname"
@@ -183,8 +196,12 @@ const Create: React.FC = () => {
                         value={surname}
                         onChange={handleInputChange}
                         isInvalid={isInvalidSurname}
-                        errorMessage={isInvalidSurname && errorMessage}
-                        className="my-4 text-gray-700"
+                        errorMessage={
+                          isInvalidSurname && (
+                            <p className=" text-black">{errorMessage}</p>
+                          )
+                        }
+                        className="my-4  text-black"
                       />
                       <Button
                         onClick={updateKyc}
@@ -207,7 +224,9 @@ const Create: React.FC = () => {
               onChange={handleInputChange}
               className="my-4 text-gray-700"
               isInvalid={isInvalidCollectionName}
-              errorMessage={isInvalidCollectionName && errorMessage}
+              errorMessage={
+                isInvalidCollectionName && errorMessageCollectionName
+              }
               isDisabled={!isKycPassed}
             />
             <Input

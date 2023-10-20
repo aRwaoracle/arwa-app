@@ -28,7 +28,7 @@ const ProfileInfo = (): JSX.Element => {
       <div className={styles.infoContainer}>
         <div className="flex flex-row justify-between">
           <Balance />
-          {!isKycPassed && (
+          {!isKycPassed && !isLoading && (
             <Button color="rgb(219, 7, 7)" onClick={onOpen}>
               <p>Pass KYC</p>
             </Button>
