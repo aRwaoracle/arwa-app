@@ -48,8 +48,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
 }): JSX.Element => {
   const {
     control,
-    formState: { errors },
-    getValues,
+    formState: { errors, isValid },
     reset,
   } = useForm<FormState>({
     resolver: yupResolver(schemaUser),
@@ -95,9 +94,7 @@ const ProfileModal: React.FC<TProfileModal> = ({
     updateKyc();
     discardClose();
   };
-  const disableKYCButton =
-    !getValues('name') || !getValues('surname') || !image;
-  console.log(disableKYCButton);
+  const disableKYCButton = !isValid && image === '';
   return (
     <Modal
       backdrop="blur"
