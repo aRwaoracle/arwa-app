@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { readContract, writeContract } from '@wagmi/core';
-import { readContracts, useAccount } from 'wagmi';
+import { readContracts, useAccount, useNetwork } from 'wagmi';
 
 import { AddressType, BlockchainConstants, PropertyType } from '@/data';
 import { ArwaManagerAbi } from '@/data/abi/arwa-manager.abi';
@@ -9,6 +9,7 @@ import { ArwaPropertyAbi } from '@/data/abi/arwa-property.abi';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useProperty = () => {
   const account = useAccount();
+  const { chain } = useNetwork();
 
   const createProperty = useCallback(
     // eslint-disable-next-line unicorn/prevent-abbreviations
@@ -16,7 +17,7 @@ export const useProperty = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const { hash } = await writeContract({
-        address: BlockchainConstants.goerli.arwaManager,
+        address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'createPropertyRequest',
         account: account.address,
@@ -32,12 +33,13 @@ export const useProperty = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const data = await readContract({
-        address: BlockchainConstants.goerli.arwaManager,
+        address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'getPropertyById',
         account: account.address,
         args: [id],
       });
+      console.log('getPropertyInfo', { data });
       return data as PropertyType;
     },
     [account],

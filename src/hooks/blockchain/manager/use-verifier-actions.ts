@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { writeContract } from '@wagmi/core';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 
 import { BlockchainConstants, PropertyStatus } from '@/data';
 import { ArwaManagerAbi } from '@/data/abi/arwa-manager.abi';
@@ -8,13 +8,14 @@ import { ArwaManagerAbi } from '@/data/abi/arwa-manager.abi';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useVerifierActions = () => {
   const account = useAccount();
+  const { chain } = useNetwork();
 
   const acceptProperty = useCallback(
     async (id: number, price: number) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const { hash } = await writeContract({
-        address: BlockchainConstants.goerli.arwaManager,
+        address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'createPropertyCollection',
         account: account.address,
@@ -30,7 +31,7 @@ export const useVerifierActions = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const { hash } = await writeContract({
-        address: BlockchainConstants.goerli.arwaManager,
+        address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'updatePropertyState',
         account: account.address,

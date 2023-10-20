@@ -52,7 +52,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     useVerifierActions();
 
   const [load, setload] = useState(false);
-  const [property, setProperty] = useState<PropertyType>();
+  const [property, setProperty] = useState<PropertyType>({} as PropertyType);
 
   const loaded = property !== undefined;
 
@@ -74,8 +74,8 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     push('/profile');
   };
   const rejectProperty = async (): Promise<void> => {
-    const { hash } = await _rejectProperty(id);
-    console.log({ hash });
+    const hash = await _rejectProperty(id);
+    console.log(hash);
     push('/profile');
   };
 
@@ -92,7 +92,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
       const result = await getPropertyInfo(id);
       setProperty(result);
     };
-    if (id) {
+    if (id || id === 0) {
       propertyInfo();
     }
   }, [id]);
@@ -164,6 +164,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
                     href={property.docs}
                     color="primary"
                     className="text-3xl"
+                    target={'_blank'}
                   >
                     Redirect to docs
                   </Link>
