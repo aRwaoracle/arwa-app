@@ -92,8 +92,10 @@ const CardProfile: React.FC<TCardProfile> = ({
           height={65}
         />
       </Skeleton>
-      <CardBody className="flex-col items-start gap-1">
-        <p className="text-default-500 text-xl">{property.name}</p>
+      <CardBody className="flex-col items-start gap-1 ">
+        <p className="text-default-500 text-xl w-full truncate ...">
+          {property.name}
+        </p>
         <div className="flex flex-row text-small justify-between w-full mt-3 items-center">
           <p className="text-white">Status:</p>
           <Button color={StatusToColor[property.status]} disabled size="sm">
