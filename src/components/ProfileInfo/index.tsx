@@ -4,6 +4,7 @@ import { useDisclosure } from '@nextui-org/modal';
 import { useAccount } from 'wagmi';
 
 import Avatar from '@/components/Avatar';
+import { useArwaUser } from '@/hooks/blockchain/manager/use-arwa-user';
 import { useKycManager } from '@/hooks/blockchain/use-kyc-manager';
 
 import SuccessIcon from '../../../public/assets/success.svg';
@@ -18,6 +19,9 @@ const ProfileInfo = (): JSX.Element => {
   const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isKycPassed, isLoading } = useKycManager();
+  const { isVerifier } = useArwaUser();
+
+  const kycNotPassed = !isKycPassed && !isLoading && !isVerifier;
   return (
     <div className={styles.mainContainer}>
       <Avatar
@@ -28,38 +32,40 @@ const ProfileInfo = (): JSX.Element => {
       <div className={styles.infoContainer}>
         <div className="flex flex-row justify-between">
           <Balance />
-          {!isKycPassed && !isLoading && (
+          {kycNotPassed && (
             <Button color="rgb(219, 7, 7)" onClick={onOpen}>
               <p>Pass KYC</p>
             </Button>
           )}
           <NetworkSwitcher />
         </div>
-        <div className={styles.kycContainer}>
-          {isLoading ? (
-            <p>Loading..</p>
-          ) : (
-            <p
-              style={{
-                color: isKycPassed ? 'rgb(8, 216, 84) ' : 'rgb(219, 7, 7)',
-                display: 'flex',
-                gap: '7px',
-              }}
-            >
-              {isKycPassed ? 'Kyc passed' : 'Kyc not passed'}
-              {isKycPassed ? (
-                <Image
-                  src={SuccessIcon}
-                  alt={'Success icon'}
-                  width={28}
-                  height={28}
-                />
-              ) : (
-                <></>
-              )}
-            </p>
-          )}
-        </div>
+        {!isVerifier && (
+          <div className={styles.kycContainer}>
+            {isLoading ? (
+              <p>Loading..</p>
+            ) : (
+              <p
+                style={{
+                  color: isKycPassed ? 'rgb(8, 216, 84) ' : 'rgb(219, 7, 7)',
+                  display: 'flex',
+                  gap: '7px',
+                }}
+              >
+                {isKycPassed ? 'Kyc passed' : 'Kyc not passed'}
+                {isKycPassed ? (
+                  <Image
+                    src={SuccessIcon}
+                    alt={'Success icon'}
+                    width={28}
+                    height={28}
+                  />
+                ) : (
+                  <></>
+                )}
+              </p>
+            )}
+          </div>
+        )}
       </div>
       <ProfileModal isOpen={isOpen} onClose={onClose} />
     </div>
