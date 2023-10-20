@@ -122,7 +122,9 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
             <TableBody>
               <TableRow key="1">
                 <TableCell>
-                  <p className="text-default-500 text-5xl">{property.name}</p>
+                  <p className="text-default-500 text-5xl w-96 truncate ...">
+                    {property.name}
+                  </p>
                 </TableCell>
                 <TableCell>
                   <Button
