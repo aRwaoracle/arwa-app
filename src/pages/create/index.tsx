@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@nextui-org/button';
 import { Card } from '@nextui-org/card';
 import { Input } from '@nextui-org/input';
 import { motion } from 'framer-motion';
+import { useNetwork } from 'wagmi';
 
 import { useProperty } from '@/hooks/blockchain/manager/use-property';
 import { useKycManager } from '@/hooks/blockchain/use-kyc-manager';
@@ -16,6 +18,8 @@ import documentIcon from '/public/assets/doc.svg';
 const Create: React.FC = () => {
   const { createProperty } = useProperty();
   const { isKycPassed, isLoading, updateKyc } = useKycManager();
+  const { chain } = useNetwork();
+
   const [isClient, setIsClient] = useState(false);
   const [userName, setUserName] = useState('');
   const [surname, setSurname] = useState('');
@@ -25,7 +29,6 @@ const Create: React.FC = () => {
   const [collectionSymbol, setCollectionSymbol] = useState('');
 
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -71,9 +74,23 @@ const Create: React.FC = () => {
         collectionSymbol,
       );
 
-      toast.success('Request created', {
+      toast.success(`${hash}`, {
         id: notification,
+        duration: 4000,
       });
+      toast.success(
+        <Link
+          className="text-black text-ellipsis underline"
+          href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
+          target="_blank"
+        >
+          A link to your hash
+        </Link>,
+        {
+          id: notification,
+          duration: 10_000,
+        },
+      );
       console.info('contract call success', hash);
     } catch (error) {
       toast.error('Whoops something went wrong!', {
