@@ -37,3 +37,21 @@ export const StatusToColor: Record<PropertyStatus, ColorsNext> = {
   [PropertyStatus.Rejected]: 'danger',
   [PropertyStatus.Canceled]: 'danger',
 };
+
+export const sumCost = (
+  propertyCollection: {
+    maxSupply: number;
+    propertryPrice: number;
+  },
+  value: string | undefined,
+): string => {
+  if (propertyCollection) {
+    if (value === undefined || value === '' || value === '0') {
+      return '0';
+    }
+    return Number.parseFloat(
+      String(propertyCollection.propertryPrice / ethToWei / Number(value)),
+    ).toFixed(4);
+  }
+  return '0';
+};
