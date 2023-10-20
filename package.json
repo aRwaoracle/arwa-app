@@ -32,6 +32,7 @@
     "@nextui-org/link": "^2.0.22",
     "@nextui-org/modal": "^2.0.23",
     "@nextui-org/progress": "^2.0.21",
+    "@nextui-org/select": "^2.1.11",
     "@nextui-org/skeleton": "^2.0.19",
     "@nextui-org/system": "^2.0.10",
     "@nextui-org/table": "^2.0.23",
