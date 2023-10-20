@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import Image from 'next/image';
 import { Button } from '@nextui-org/button';
 import { Card } from '@nextui-org/card';
@@ -61,12 +62,26 @@ const Create: React.FC = () => {
   };
 
   const handleCreateProperty = async (): Promise<void> => {
-    const hash = await createProperty(
-      collectionName,
-      documentReference,
-      collectionSymbol,
-    );
-    console.log({ hash });
+    const notification = toast.loading('Creating a request...');
+    //add timer and link to hash on success toast
+    try {
+      const hash = await createProperty(
+        collectionName,
+        documentReference,
+        collectionSymbol,
+      );
+
+      toast.success('Request created', {
+        id: notification,
+      });
+      console.info('contract call success', hash);
+    } catch (error) {
+      toast.error('Whoops something went wrong!', {
+        id: notification,
+      });
+
+      console.error('contract call failure', error);
+    }
   };
 
   const validateText = (value: string): boolean => {

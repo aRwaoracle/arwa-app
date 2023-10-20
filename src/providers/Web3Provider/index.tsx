@@ -1,4 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import {
   connectorsForWallets,
@@ -65,18 +66,21 @@ const Web3Provider: FC<PropsWithChildren> = ({ children }) => {
   const { locale } = useRouter() as { locale: Locale };
 
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider
-        appInfo={appInfo}
-        chains={chains}
-        locale={locale}
-        theme={darkTheme({
-          accentColor: '#4F6BFF',
-        })}
-      >
-        {children}
-      </RainbowKitProvider>
-    </WagmiConfig>
+    <>
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider
+          appInfo={appInfo}
+          chains={chains}
+          locale={locale}
+          theme={darkTheme({
+            accentColor: '#4F6BFF',
+          })}
+        >
+          {children}
+        </RainbowKitProvider>
+      </WagmiConfig>
+      <Toaster />
+    </>
   );
 };
 
