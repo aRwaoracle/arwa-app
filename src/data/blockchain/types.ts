@@ -3,19 +3,19 @@ import { PropertyStatus } from '@/data';
 export type AddressType = `0x${string}`;
 
 export type BlockchainConstantsType = {
-  goerli: {
+  5: {
     kyc: AddressType;
     arwaManager: AddressType;
   };
-  mantleTeestnet: {
+  5001: {
     kyc: AddressType;
     arwaManager: AddressType;
   };
-  scrollSepolia: {
+  '534351': {
     kyc: AddressType;
     arwaManager: AddressType;
   };
-  polygonzkEvmTestnet: {
+  1442: {
     kyc: AddressType;
     arwaManager: AddressType;
   };

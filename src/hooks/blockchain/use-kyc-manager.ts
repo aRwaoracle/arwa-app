@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { useAccount, useContractRead } from 'wagmi';
+import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import { BlockchainConstants, KycManagerAbi } from '@/data';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useKycManager = () => {
   const { address } = useAccount();
+  const { chain } = useNetwork();
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
+
   const { data, isLoading, isError, refetch, isRefetching } = useContractRead({
-    address: BlockchainConstants.goerli.kyc,
+    address: BlockchainConstants[chain?.id].kyc,
     abi: KycManagerAbi,
     args: [address],
     functionName: 'addressToKycState',
@@ -24,6 +26,7 @@ export const useKycManager = () => {
         method: 'post',
         body: JSON.stringify({
           address,
+          chain: String(chain?.id),
         }),
       });
     } catch (error) {

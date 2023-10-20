@@ -68,7 +68,7 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
       const result = await getPropertyInfo(id);
       setProperty(result);
     };
-    if (id) {
+    if (id || id === 0) {
       propertyInfo();
     }
   }, [id]);
@@ -164,7 +164,7 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
           onPress={mint}
           className="w-1/4"
         >
-          Accept
+          Mint
         </Button>
       </CardFooter>
     </Card>

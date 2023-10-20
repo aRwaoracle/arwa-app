@@ -94,6 +94,7 @@ const CardMintTable: React.FC<TCardMintTable> = ({
               href={property.docs}
               color="primary"
               className="text-3xl"
+              target={'_blank'}
             >
               Redirect to docs
             </Link>
