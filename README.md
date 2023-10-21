@@ -18,7 +18,12 @@ Privat key for admin (used in .env for KYC manager)
 Privat key for verifier (used in metamask for verifiers transactions approve)
 - `0xbc230386010d771444524290879b2ec4f4676a6667925019e37be8011d614fa1`
 
-[Created With LiteFront](https://github.com/uxname/litefront)
+**Created with:**
+
+- [`LiteFront`](https://github.com/uxname/litefront)
+- [`RainbowKit`](https://www.rainbowkit.com/)
+- [`wagmi`](https://wagmi.sh/)
+- [`viem`](https://viem.sh/)
 
 # Get started
 - `npm install`
