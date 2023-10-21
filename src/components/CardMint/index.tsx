@@ -1,12 +1,14 @@
 import { memo, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/button';
 import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/card';
 import { Input } from '@nextui-org/input';
 import { Tooltip } from '@nextui-org/tooltip';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount, useBalance, useNetwork } from 'wagmi';
 import * as Yup from 'yup';
 
 import { PropertyType } from '@/data';
@@ -28,6 +30,8 @@ const schemaUser = Yup.object().shape({
 });
 
 const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
+  const { chain } = useNetwork();
+
   const { push } = useRouter();
   const { address } = useAccount();
   const { data } = useBalance({ address });
@@ -53,13 +57,35 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
   });
 
   const mint = async (): Promise<void> => {
+    const notification = toast.loading('Minting....');
     if (property) {
-      const hash = await mintTokens(
-        property.collectionAddress,
-        Number(getValues('amount')),
-      );
-      console.log({ hash });
-      push('/profile');
+      try {
+        const hash = await mintTokens(
+          property.collectionAddress,
+          Number(getValues('amount')),
+        );
+        push('/profile');
+        toast.success(
+          <Link
+            className="text-black text-ellipsis underline"
+            href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
+            target="_blank"
+          >
+            Link to hash
+          </Link>,
+          {
+            id: notification,
+            duration: 10_000,
+          },
+        );
+        console.info('contract call success', hash);
+      } catch (error) {
+        toast.error('Whoops something went wrong!', {
+          id: notification,
+        });
+
+        console.error('contract call failure', error);
+      }
     }
   };
 
@@ -127,7 +153,7 @@ const CardMint: React.FC<TCardProfile> = ({ id }): JSX.Element => {
                       </Button>
                     </Tooltip>
                   }
-                  placeholder="0" // do without .00
+                  placeholder="0"
                   labelPlacement="outside"
                   onChange={onChange}
                   value={value}

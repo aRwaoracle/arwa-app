@@ -66,7 +66,6 @@ const Create: React.FC = () => {
 
   const handleCreateProperty = async (): Promise<void> => {
     const notification = toast.loading('Creating a request...');
-    //add timer and link to hash on success toast
     try {
       const hash = await createProperty(
         collectionName,

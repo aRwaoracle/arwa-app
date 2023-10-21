@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@nextui-org/button';
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/table';
+import { useNetwork } from 'wagmi';
 import * as Yup from 'yup';
 
 import { PropertyType, StatusToText } from '@/data';
@@ -46,6 +48,7 @@ const schemaUser = Yup.object().shape({
 
 const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
   const { push } = useRouter();
+  const { chain } = useNetwork();
 
   const { getPropertyInfo } = useProperty();
   const { acceptProperty: _acceptProperty, rejectProperty: _rejectProperty } =
@@ -66,17 +69,63 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
   });
 
   const acceptProperty = async (): Promise<void> => {
-    const { hash } = await _acceptProperty(
-      id,
-      Number(getValues('amount')) * ethToWei,
-    ); //wei
-    console.log({ hash });
-    push('/profile');
+    const notification = toast.loading('Acceptance...');
+    try {
+      const { hash } = await _acceptProperty(
+        id,
+        Number(getValues('amount')) * ethToWei,
+      );
+      push('/profile');
+
+      toast.success(
+        <Link
+          className="text-black text-ellipsis underline"
+          href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
+          target="_blank"
+        >
+          Link to hash
+        </Link>,
+        {
+          id: notification,
+          duration: 10_000,
+        },
+      );
+      console.info('contract call success', hash);
+    } catch (error) {
+      toast.error('Whoops something went wrong!', {
+        id: notification,
+      });
+
+      console.error('contract call failure', error);
+    }
   };
+
   const rejectProperty = async (): Promise<void> => {
-    const hash = await _rejectProperty(id);
-    console.log(hash);
-    push('/profile');
+    const notification = toast.loading('Rejection...');
+    try {
+      const hash = await _rejectProperty(id);
+      push('/profile');
+      toast.success(
+        <Link
+          className="text-black text-ellipsis underline"
+          href={`${chain?.blockExplorers?.default.url}/tx/${hash}`}
+          target="_blank"
+        >
+          Link to hash
+        </Link>,
+        {
+          id: notification,
+          duration: 10_000,
+        },
+      );
+      console.info('contract call success', hash);
+    } catch (error) {
+      toast.error('Whoops something went wrong!', {
+        id: notification,
+      });
+
+      console.error('contract call failure', error);
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
