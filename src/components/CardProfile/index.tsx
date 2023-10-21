@@ -78,7 +78,7 @@ const CardProfile: React.FC<TCardProfile> = ({
     <Card
       shadow="sm"
       onPress={(): void => console.log('item pressed')}
-      className="w-full bg-[var(--main-card-color)] cursor-default pb-2"
+      className="w-full bg-[var(--main-card-color)] cursor-default pb-2 h-fit"
     >
       <Skeleton isLoaded={load}>
         <Image
@@ -86,14 +86,16 @@ const CardProfile: React.FC<TCardProfile> = ({
           radius="none"
           alt={'home'}
           className="z-0 w-full h-full object-cover"
-          src="https://app.requestly.io/delay/5000/https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
+          src="https://img.freepik.com/free-photo/3d-rendering-house-model_23-2150799627.jpg?t=st=1697384061~exp=1697387661~hmac=dfc68101004a144fc8b1d9db5adcd73b8522defb78b64db1bb087ccb13754c4f&w=1480"
           onLoad={handleLoad}
           width={100}
           height={65}
         />
       </Skeleton>
-      <CardBody className="flex-col items-start gap-1">
-        <p className="text-default-500 text-xl">{property.name}</p>
+      <CardBody className="flex-col items-start gap-1 ">
+        <p className="text-default-500 text-xl w-full truncate ...">
+          {property.name}
+        </p>
         <div className="flex flex-row text-small justify-between w-full mt-3 items-center">
           <p className="text-white">Status:</p>
           <Button color={StatusToColor[property.status]} disabled size="sm">
