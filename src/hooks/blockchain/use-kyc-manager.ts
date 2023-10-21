@@ -14,7 +14,7 @@ export const useKycManager = () => {
   const { data, isLoading, isError, refetch, isRefetching } = useContractRead({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    address: BlockchainConstants[chain?.id].kyc,
+    address: BlockchainConstants[chain?.id || '5'].kyc,
     abi: KycManagerAbi,
     args: [address],
     functionName: 'addressToKycState',
@@ -28,7 +28,7 @@ export const useKycManager = () => {
         method: 'post',
         body: JSON.stringify({
           address,
-          chain: String(chain?.id),
+          chain: String(chain?.id || '5'),
         }),
       });
     } catch (error) {

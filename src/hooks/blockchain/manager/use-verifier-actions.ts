@@ -17,7 +17,7 @@ export const useVerifierActions = () => {
       const { hash } = await writeContract({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
+        address: BlockchainConstants[String(chain?.id) || '5'].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'createPropertyCollection',
         account: account.address,
@@ -35,7 +35,7 @@ export const useVerifierActions = () => {
       const { hash } = await writeContract({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
-        address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
+        address: BlockchainConstants[String(chain?.id) || '5'].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'updatePropertyState',
         account: account.address,
