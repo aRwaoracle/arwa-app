@@ -13,6 +13,8 @@ export const useArwaUser = () => {
   //@ts-ignore
   const { data: isVerifier } = useContractRead({
     abi: ArwaManagerAbi,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
     functionName: 'verifier',
     args: [address],
@@ -22,6 +24,8 @@ export const useArwaUser = () => {
   //@ts-ignore
   const { data: userProperties } = useContractRead({
     abi: ArwaManagerAbi,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
     functionName: 'userProperties',
     // args: ['0x0dA55Bb04EAbF26a00B0B90D27c591E822323ab2'],
@@ -32,6 +36,8 @@ export const useArwaUser = () => {
   //@ts-ignore
   const { data: verifierProperties } = useContractRead({
     abi: ArwaManagerAbi,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
     functionName: 'getAvailableVerifierProperties',
     // args: ['0x0dA55Bb04EAbF26a00B0B90D27c591E822323ab2'],

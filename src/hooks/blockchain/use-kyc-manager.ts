@@ -12,6 +12,8 @@ export const useKycManager = () => {
   // @ts-ignore
 
   const { data, isLoading, isError, refetch, isRefetching } = useContractRead({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     address: BlockchainConstants[chain?.id].kyc,
     abi: KycManagerAbi,
     args: [address],

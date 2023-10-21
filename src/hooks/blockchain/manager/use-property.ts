@@ -17,6 +17,8 @@ export const useProperty = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const { hash } = await writeContract({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'createPropertyRequest',
@@ -33,6 +35,8 @@ export const useProperty = () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       const data = await readContract({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         address: BlockchainConstants[String(chain?.id) || ''].arwaManager,
         abi: ArwaManagerAbi,
         functionName: 'getPropertyById',
