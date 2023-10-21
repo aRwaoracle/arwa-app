@@ -10,9 +10,13 @@ In summary, our project for the hackathon focuses on being an oracle for real-wo
 
 Here is a link to our application that may help you better understand: https://app.arwa.space/
 
-Privat key for admin (used in .env for KYC manager) - 0x207ccca3eca6568801fd173afcdbe2374a94b37ba7f2bc95257f6a2ea892d79b
+**Privat keys:**
 
-Privat key for verifier (used in metamask for verifiers transactions approve) - 0xbc230386010d771444524290879b2ec4f4676a6667925019e37be8011d614fa1
+Privat key for admin (used in .env for KYC manager) 
+- `0x207ccca3eca6568801fd173afcdbe2374a94b37ba7f2bc95257f6a2ea892d79b`
+
+Privat key for verifier (used in metamask for verifiers transactions approve)
+- `0xbc230386010d771444524290879b2ec4f4676a6667925019e37be8011d614fa1`
 
 [Created With LiteFront](https://github.com/uxname/litefront)
 
