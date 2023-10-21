@@ -1,5 +1,17 @@
 ![](./.github/logo.png)
 
+Hi! We would like to tell you about our project for the [ETHOnline2023 hackathon](https://ethglobal.com/events/ethonline2023). Our project is an oracle for real-world assets. We have developed an application using Next.js, wagmi, and rainbowkit, Solidity, viem. It is important to note that we do not use a traditional backend - instead, we rely on smart contracts.
+
+Users can create requests to create a collection of their real-world assets. These requests then enter a pending status. Verifiers can view these requests in their admin panel, where they can review the request, attached documents, and set a price for the asset. They can create a collection using smart contracts and assign the person who made the request as the owner of the collection.
+
+Afterwards, the user can specify the total number of tokens they want in their collection and mint the collection tokens. These tokens can be traded, listed on a marketplace, gifted to anyone, and used to create a DAO around the asset.
+
+In summary, our project for the hackathon focuses on being an oracle for real-world assets. We leverage smart contracts to create collections of assets and enable token trading based on these assets. We aim to create a decentralized marketplace for exchange, gifting, and DAO creation around these assets.
+
+Here is a link to our application that may help you better understand: https://app.arwa.space/
+
+Privat key for admin - 0x207ccca3eca6568801fd173afcdbe2374a94b37ba7f2bc95257f6a2ea892d79b
+
 [Created With LiteFront](https://github.com/uxname/litefront)
 
 # Get started
