@@ -161,12 +161,14 @@ const Create: React.FC = () => {
   return (
     <div>
       {isClient && (
-        <div>
+        <div className="mx-2 flex flex-col">
           <div className={styles.kycContainer}>
             {isLoading ? (
               <div
                 className={`mb-4 ${
-                  isKycPassed ? 'bg-gray-500 w-96 h-40' : 'bg-gray-500 h-96'
+                  isKycPassed
+                    ? 'bg-gray-500 w-1/2 sm:w-1/3 h-40'
+                    : 'bg-gray-500 h-96'
                 } flex items-center justify-center animate-pulse rounded-2xl`}
               >
                 <p className="text-center ">Loading...</p>
@@ -174,7 +176,9 @@ const Create: React.FC = () => {
             ) : (
               <Card
                 className={`mb-4 ${
-                  isKycPassed ? 'bg-green-500 w-96 h-40' : 'bg-red-500'
+                  isKycPassed
+                    ? 'bg-green-500 w-1/2 sm:w-1/3 h-40'
+                    : 'bg-red-500'
                 }`}
               >
                 <div className={`p-4 rounded-md font-orbitron`}>
@@ -244,49 +248,47 @@ const Create: React.FC = () => {
                 </div>
               </Card>
             )}
-            <Input
-              name="collectionName"
-              label="Collection name"
-              value={collectionName}
-              onChange={handleInputChange}
-              className="my-4 text-gray-700"
-              isInvalid={isInvalidCollectionName}
-              errorMessage={
-                isInvalidCollectionName && errorMessageCollectionName
-              }
-              isDisabled={!isKycPassed}
-            />
-            <Input
-              name="documentReference"
-              label="Document reference"
-              value={documentReference}
-              onChange={handleInputChange}
-              className="my-4 text-gray-700"
-              isInvalid={isInvalidUrl}
-              errorMessage={isInvalidUrl && 'Please enter a valid URL'}
-              isDisabled={!isKycPassed}
-            />
-            <Input
-              name="collectionSymbol"
-              label="Collection symbol"
-              value={collectionSymbol}
-              onChange={handleInputChange}
-              className="my-4 text-gray-700"
-              isInvalid={isInvalidCollectionSymbol}
-              errorMessage={isInvalidCollectionSymbol && errorMessage}
-              isDisabled={!isKycPassed}
-            />
-
-            <Button
-              onClick={handleCreateProperty}
-              className={`${
-                disableCreateButton ? 'bg-red-500' : 'bg-green-500'
-              } mt-4`}
-              isDisabled={disableCreateButton}
-            >
-              Create request
-            </Button>
           </div>
+          <Input
+            name="collectionName"
+            label="Collection name"
+            value={collectionName}
+            onChange={handleInputChange}
+            className="my-4 text-gray-700"
+            isInvalid={isInvalidCollectionName}
+            errorMessage={isInvalidCollectionName && errorMessageCollectionName}
+            isDisabled={!isKycPassed}
+          />
+          <Input
+            name="documentReference"
+            label="Document reference"
+            value={documentReference}
+            onChange={handleInputChange}
+            className="my-4 text-gray-700"
+            isInvalid={isInvalidUrl}
+            errorMessage={isInvalidUrl && 'Please enter a valid URL'}
+            isDisabled={!isKycPassed}
+          />
+          <Input
+            name="collectionSymbol"
+            label="Collection symbol"
+            value={collectionSymbol}
+            onChange={handleInputChange}
+            className="my-4 text-gray-700"
+            isInvalid={isInvalidCollectionSymbol}
+            errorMessage={isInvalidCollectionSymbol && errorMessage}
+            isDisabled={!isKycPassed}
+          />
+
+          <Button
+            onClick={handleCreateProperty}
+            className={`${
+              disableCreateButton ? 'bg-red-500' : 'bg-green-500'
+            } mt-4`}
+            isDisabled={disableCreateButton}
+          >
+            Create request
+          </Button>
         </div>
       )}
     </div>

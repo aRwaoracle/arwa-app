@@ -23,49 +23,55 @@ const ProfileInfo = (): JSX.Element => {
 
   const kycNotPassed = !isKycPassed && !isLoading && !isVerifier;
   return (
-    <div className={styles.mainContainer}>
+    <div className="mx-2 flex flex-col sm:flex-row">
       <Avatar
         profileImage={address || ''}
         className={styles.avatarContainer}
-        size={150}
+        size={100}
       />
-      <div className={styles.infoContainer}>
-        <div className="flex flex-row justify-between">
+
+      <div className="w-full justify-between flex flex-col sm:flex-row items-center sm:items-baseline mt-4 sm:mt-0">
+        <div className="flex flex-col ml-5">
           <Balance />
           {kycNotPassed && (
             <Button color="rgb(219, 7, 7)" onClick={onOpen}>
               <p>Pass KYC</p>
             </Button>
           )}
-          <NetworkSwitcher />
-        </div>
-        {!isVerifier && (
-          <div className={styles.kycContainer}>
-            {isLoading ? (
-              <p>Loading..</p>
-            ) : (
-              <p
-                style={{
-                  color: isKycPassed ? 'rgb(8, 216, 84) ' : 'rgb(219, 7, 7)',
-                  display: 'flex',
-                  gap: '7px',
-                }}
-              >
-                {isKycPassed ? 'Kyc passed' : 'Kyc not passed'}
-                {isKycPassed ? (
-                  <Image
-                    src={SuccessIcon}
-                    alt={'Success icon'}
-                    width={28}
-                    height={28}
-                  />
+          <div>
+            {!isVerifier && (
+              <div className={styles.kycContainer}>
+                {isLoading ? (
+                  <p>Loading..</p>
                 ) : (
-                  <></>
+                  <p
+                    style={{
+                      color: isKycPassed
+                        ? 'rgb(8, 216, 84) '
+                        : 'rgb(219, 7, 7)',
+                      display: 'flex',
+                      gap: '7px',
+                    }}
+                  >
+                    {isKycPassed ? 'Kyc passed' : 'Kyc not passed'}
+                    {isKycPassed ? (
+                      <Image
+                        src={SuccessIcon}
+                        alt={'Success icon'}
+                        width={28}
+                        height={28}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </p>
                 )}
-              </p>
+              </div>
             )}
           </div>
-        )}
+        </div>
+
+        <NetworkSwitcher />
       </div>
       <ProfileModal isOpen={isOpen} onClose={onClose} />
     </div>

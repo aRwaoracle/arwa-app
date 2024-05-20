@@ -150,7 +150,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
     <Card
       shadow="sm"
       onPress={(): void => console.log('item pressed')}
-      className="w-full bg-[var(--main-card-color)] cursor-default"
+      className="w-full bg-[var(--main-card-color)] cursor-default "
     >
       <CardHeader className="text-[var(--main-text-color)] text-3xl pl-5">
         Verify tokens
@@ -170,15 +170,15 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
             </TableHeader>
             <TableBody>
               <TableRow key="1">
-                <TableCell>
-                  <p className="text-default-500 text-5xl w-96 truncate ...">
+                <TableCell className="w-1/2">
+                  <p className="text-default-500 text-xl  sm:text-3xl truncate ...">
                     {property.name}
                   </p>
                 </TableCell>
                 <TableCell>
                   <Button
                     color={StatusToColor[property.status]}
-                    className="w-1/2"
+                    className="w-full sm:w-1/2"
                     disabled
                   >
                     {StatusToText[property.status]}
@@ -187,7 +187,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
               </TableRow>
               <TableRow key="2">
                 <TableCell>
-                  <p className="text-default-500 text-3xl">Image:</p>
+                  <p className="text-default-500 text-xl sm:text-3xl">Image:</p>
                 </TableCell>
                 <TableCell className="overflow-visible p-3 shadow-lg">
                   <Skeleton isLoaded={load}>
@@ -206,7 +206,9 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
               </TableRow>
               <TableRow key="3">
                 <TableCell>
-                  <p className="text-default-500 text-3xl">Link to docs:</p>
+                  <p className="text-default-500 text-xl sm:text-3xl">
+                    Link to docs:
+                  </p>
                 </TableCell>
                 <TableCell>
                   <Link
@@ -214,7 +216,7 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
                     showAnchorIcon
                     href={property.docs}
                     color="primary"
-                    className="text-3xl"
+                    className="text-xl sm:text-3xl"
                     target={'_blank'}
                   >
                     Redirect to docs
@@ -223,10 +225,15 @@ const CardApprove: React.FC<TCardProfile> = ({ id }): JSX.Element => {
               </TableRow>
               <TableRow key="4">
                 <TableCell>
-                  <p className="text-default-500 text-3xl">Symbol:</p>
+                  <p className="text-default-500 text-xl sm:text-3xl">
+                    Symbol:
+                  </p>
                 </TableCell>
                 <TableCell>
-                  <p className="text-white text-3xl"> {property.symbol}</p>
+                  <p className="text-white text-xl sm:text-3xl">
+                    {' '}
+                    {property.symbol}
+                  </p>
                 </TableCell>
               </TableRow>
             </TableBody>

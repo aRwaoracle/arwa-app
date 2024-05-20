@@ -9,4 +9,11 @@
   color: var(--main-text-color);
   font-size: 30px;
   margin-bottom: 20px;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .tokenText {
+    text-align: left;
+  }
 }

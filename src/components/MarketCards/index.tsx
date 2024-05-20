@@ -16,13 +16,13 @@ const MarketCards = (): JSX.Element => {
   ];
 
   return (
-    <div className="gap-3 grid grid-cols-2 sm:grid-cols-1">
+    <div className="gap-3 grid grid-cols-1 ">
       {isClient && (
         <>
           {[...Array.from({ length: 2 }).keys()].map((_, index) => (
             <Card shadow="sm" key={index} className={styles.cardContainer}>
-              <div className="flex">
-                <CardBody className=" p-2 rounded-2xl overflow-visible shadow-lg w-1/2">
+              <div className="flex flex-col sm:flex-row">
+                <CardBody className="rounded-2xl overflow-visible shadow-lg  w-full sm:w-1/2">
                   <Carousel images={images} />
                 </CardBody>
                 <CardFooter className="flex-col items-start gap-4 w-1/2 p-4">

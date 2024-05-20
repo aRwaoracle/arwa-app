@@ -12,7 +12,6 @@ import Web3Provider from '@/providers/Web3Provider';
 
 import '../styles/global.css';
 
-import styles from './app.module.scss';
 // eslint-disable-next-line new-cap
 const orbitron = Orbitron({
   weight: '400',
@@ -28,9 +27,10 @@ function MyApp({ Component, pageProps }: AppProps): ReactNode {
         <Web3Provider>
           <NextUIProvider>
             <ErrorBoundary>
-              <div className={styles.wrapper}>
+              <div className="mx-auto max-w-screen-lg min-h-screen flex flex-col justify-between">
                 <Header />
                 <Component {...pageProps} />
+
                 <Footer />
               </div>
             </ErrorBoundary>
