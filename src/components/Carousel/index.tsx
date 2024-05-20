@@ -16,7 +16,7 @@ const Carousel: React.FC<{ images: string[] }> = ({ images }) => {
   };
 
   return (
-    <div className="overflow-hidden relative">
+    <div className="overflow-hidden relative ">
       <div
         className="flex transition ease-out duration-400"
         style={{

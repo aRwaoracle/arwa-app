@@ -15,11 +15,11 @@ const Main: React.FC = () => {
   };
 
   return (
-    <div className={styles.main}>
+    <div className=" flex flex-col items-center justify-center space-y-4 sm:flex-row mx-2  ">
       <Image className={styles.main_image} src={Arwa} alt={'Arwa'} />
-      <div className={styles.buttonContainer}>
-        <span>Start your journey now!</span>
-        <Button color="white" onClick={go('/create')}>
+      <div className="text-center mt-4 sm:mt-0 mx-4">
+        <span className="text-lg">Start your journey now!</span>
+        <Button className="mt-4" color="white" onClick={go('/create')}>
           Tokenise your property
         </Button>
       </div>

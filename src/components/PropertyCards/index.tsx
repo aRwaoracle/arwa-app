@@ -31,7 +31,7 @@ const PropertyCards = (): JSX.Element => {
 
   return (
     <div>
-      <div className="flex flex-row w-full justify-between items-start">
+      <div className="flex flex-col sm:flex-row w-full justify-between items-start ">
         <p className="text-[var(--main-text-color)] mb-10 text-3xl">
           {isVerifier ? 'Tokens' : 'Your tokens'}
         </p>
@@ -41,7 +41,7 @@ const PropertyCards = (): JSX.Element => {
             aria-label="Tabs sizes"
             selectedKey={category}
             onSelectionChange={(key): void => setCategory(key as string)}
-            classNames={{ tabList: 'bg-[var(--main-card-color)]' }}
+            classNames={{ tabList: 'bg-[var(--main-card-color)] mb-4 sm:mb-0' }}
           >
             <Tab title="All" key={0} />
             <Tab title="Accepted" key={1} />
@@ -54,7 +54,7 @@ const PropertyCards = (): JSX.Element => {
           </Button>
         )}
       </div>
-      <div className="gap-3 grid grid-cols-2 sm:grid-cols-4">
+      <div className="mt-4 sm:mt-0 gap-3 grid grid-cols-1 sm:grid-cols-4">
         {isClient && (
           <>
             <>

@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 
 const Market: FC = () => {
   return (
-    <div className={styles.main}>
+    <div className="mx-2 flex flex-col items-center justify-center gap-8 sm:flex-row">
       <div>
         <p className={styles.tokenText}>Marketplace</p>
         <MarketCards />

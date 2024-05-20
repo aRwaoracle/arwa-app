@@ -31,7 +31,7 @@ const NetworkSwitcher = (): JSX.Element => {
         label="Select chain"
         defaultSelectedKeys={[chain ? `${chain.id}` : '']}
         selectedKeys={[selectedChain ? `${selectedChain.id}` : '']}
-        className="max-w-xs"
+        className="max-w-xs text-black"
         scrollShadowProps={{
           isEnabled: false,
         }}
@@ -39,7 +39,6 @@ const NetworkSwitcher = (): JSX.Element => {
           handleChange(Number(newChainId))
         }
         disabledKeys={[chain ? `${chain.id}` : '']}
-        style={{ backgroundColor: '#000', color: '#fff' }}
       >
         {chains.map((netChain) => (
           <SelectItem

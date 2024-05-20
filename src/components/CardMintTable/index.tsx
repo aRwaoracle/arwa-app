@@ -51,15 +51,15 @@ const CardMintTable: React.FC<TCardMintTable> = ({
       </TableHeader>
       <TableBody>
         <TableRow key="1">
-          <TableCell>
-            <p className="text-default-500 text-5xl w-96 truncate ...">
+          <TableCell className="w-1/2">
+            <p className="text-default-500 text-xl sm:text-3xl truncate ...">
               {property.name}
             </p>
           </TableCell>
           <TableCell>
             <Button
               color={StatusToColor[property.status]}
-              className="w-1/2"
+              className="w-1/8 sm:w-1/2"
               disabled
             >
               {StatusToText[property.status]}
@@ -68,7 +68,7 @@ const CardMintTable: React.FC<TCardMintTable> = ({
         </TableRow>
         <TableRow key="2">
           <TableCell>
-            <p className="text-default-500 text-3xl">Image:</p>
+            <p className="text-default-500 text-xl sm:text-3xl">Image:</p>
           </TableCell>
           <TableCell className="overflow-visible p-3 shadow-lg">
             <Skeleton isLoaded={load}>
@@ -87,7 +87,9 @@ const CardMintTable: React.FC<TCardMintTable> = ({
         </TableRow>
         <TableRow key="3">
           <TableCell>
-            <p className="text-default-500 text-3xl">Link to docs:</p>
+            <p className="text-default-500 text-xl sm:text-3xl">
+              Link to docs:
+            </p>
           </TableCell>
           <TableCell>
             <Link
@@ -95,7 +97,7 @@ const CardMintTable: React.FC<TCardMintTable> = ({
               showAnchorIcon
               href={property.docs}
               color="primary"
-              className="text-3xl"
+              className="text-xl sm:text-3xl"
               target={'_blank'}
             >
               Redirect to docs
@@ -104,19 +106,21 @@ const CardMintTable: React.FC<TCardMintTable> = ({
         </TableRow>
         <TableRow key="4">
           <TableCell>
-            <p className="text-default-500 text-3xl">Symbol:</p>
+            <p className="text-default-500 text-xl sm:text-3xl">Symbol:</p>
           </TableCell>
           <TableCell>
-            <p className="text-white text-3xl"> {property.symbol}</p>
+            <p className="text-white text-xl sm:text-3xl"> {property.symbol}</p>
           </TableCell>
         </TableRow>
         <TableRow key="5">
           <TableCell>
-            <p className="text-default-500 text-3xl">Collection address:</p>
+            <p className="text-default-500 text-xl sm:text-3xl">
+              Collection address:
+            </p>
           </TableCell>
           <TableCell>
             <Link
-              className="text-white text-ellipsis text-3xl"
+              className="text-white text-ellipsis text-xl sm:text-3xl"
               href={`https://goerli.etherscan.io/address/${property.collectionAddress}`}
               target="_blank"
             >
@@ -126,10 +130,12 @@ const CardMintTable: React.FC<TCardMintTable> = ({
         </TableRow>
         <TableRow key="6">
           <TableCell>
-            <p className="text-default-500 text-3xl">Property price:</p>
+            <p className="text-default-500 text-xl sm:text-3xl">
+              Property price:
+            </p>
           </TableCell>
           <TableCell>
-            <p className="text-white text-3xl">
+            <p className="text-white text-xl sm:text-3xl">
               {propertyCollection.propertryPrice / ethToWei} ETH
             </p>
           </TableCell>

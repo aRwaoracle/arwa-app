@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'up-down': '0 2px 0 0 rgba(0, 0, 0, 0.1)',
+      },
       fontFamily: {
         orbitron: ['Orbitron', 'sans-serif'],
       },
